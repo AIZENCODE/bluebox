@@ -17,10 +17,12 @@ class DataResource extends Resource
 {
     protected static ?string $model = Data::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationLabel = 'Información de la Empresa';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office';
+    // nombre del grupo
+    protected static ?string $navigationGroup = 'Maestro';
+    protected static ?string $navigationLabel = 'Empresa';
     protected static ?string $modelLabel = 'Información';
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -60,7 +62,7 @@ class DataResource extends Resource
             ]);
     }
 
-    
+
     public static function getPages(): array
     {
         return [
@@ -119,5 +121,4 @@ class DataResource extends Resource
     {
         return true; // ✅ Asegurar que el menú aparece
     }
-
 }

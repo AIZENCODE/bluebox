@@ -14,14 +14,33 @@ class Account extends Model
     protected $fillable = [
         'nombre',
         'tipo',
-        'bank_id',
         'numero',
         'numero_interbancario',
         'estado',
+        'bank_id',
+        'accounttype_id',
+        'currency_id',
         
     ];
     public function bank()
     {
         return $this->belongsTo(Bank::class);
     }
+
+    public function accountType()
+    {
+        return $this->belongsTo(AccountType::class, 'accounttype_id');
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
+    public function datas()
+    {
+        return $this->belongsToMany(Data::class);
+    }
+    
+
+
 }

@@ -13,6 +13,20 @@ return new class extends Migration
     {
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();
+
+            $table->string('codigo', 20)->unique();
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin');
+            $table->text('descripcion')->nullable();
+            $table->boolean('estado')->default(true);
+            // Aquí definimos el campo 'etapa' como enum en la BD
+            $table->enum('etapa', ['inicio', 'proceso', 'finalizado'])->default('inicio');
+
+
+
+            $table->foreignId('quatation_id')->constrained('companies');
+
+
             $table->timestamps();
         });
     }

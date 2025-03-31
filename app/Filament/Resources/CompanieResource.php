@@ -4,8 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CompanieResource\Pages;
 use App\Filament\Resources\CompanieResource\RelationManagers;
+use App\Filament\Resources\CompanieResource\RelationManagers\ClientsRelationManager;
 use App\Models\Companie;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -17,33 +19,45 @@ class CompanieResource extends Resource
 {
     protected static ?string $model = Companie::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
+    // nombre del grupo
+    protected static ?string $navigationGroup = 'Negocios';
+    protected static ?string $navigationLabel = 'Compañias';
+    protected static ?string $modelLabel = 'Compañias';
+    protected static ?int $navigationSort = 7;
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nombre')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('razon_social')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('ruc')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('correo')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('telefono')
-                    ->tel()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('direccion')
-                    ->required()
-                    ->maxLength(255),
                 Forms\Components\Toggle::make('estado')
-                    ->required(),
+                ->required(),
+                Section::make('Compañia')
+                    ->description('Imformacion de la compañia.')
+                    ->schema([
+
+                        Forms\Components\TextInput::make('nombre')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('razon_social')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('ruc')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('correo')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('telefono')
+                            ->tel()
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('direccion')
+                            ->required()
+                            ->maxLength(255),
+                      
+
+                    ])
+                    ->columns(2),
             ]);
     }
 
@@ -94,7 +108,7 @@ class CompanieResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ClientsRelationManager::class,
         ];
     }
 

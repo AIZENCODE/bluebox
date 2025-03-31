@@ -6,6 +6,7 @@ use App\Filament\Resources\ServiceResource\Pages;
 use App\Filament\Resources\ServiceResource\RelationManagers;
 use App\Models\Service;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -17,26 +18,45 @@ class ServiceResource extends Resource
 {
     protected static ?string $model = Service::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-wrench-screwdriver';
+    // nombre del grupo
+    protected static ?string $navigationGroup = 'Catalogo';
+    protected static ?string $navigationLabel = 'Servicios';
+    protected static ?string $modelLabel = 'Servicio';
+
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nombre')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('descripcion')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('precio_min')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('precio_max')
-                    ->required()
-                    ->numeric(),
                 Forms\Components\Toggle::make('estado')
                     ->required(),
+                Section::make('Servicios')
+                    ->description('Imformacion del servicio.')
+                    ->schema([
+
+                        Forms\Components\TextInput::make('nombre')
+                            ->required()
+                            ->maxLength(255)
+                            ->columnSpanFull(),
+
+                        Forms\Components\TextInput::make('precio_min')
+                            ->required()
+                            ->numeric(),
+                        Forms\Components\TextInput::make('precio_max')
+                            ->required()
+                            ->numeric(),
+
+                        Forms\Components\Textarea::make('descripcion')
+                            ->required()
+                            ->columnSpanFull(),
+
+                    ])
+                    ->columns(2),
+
+
+
             ]);
     }
 

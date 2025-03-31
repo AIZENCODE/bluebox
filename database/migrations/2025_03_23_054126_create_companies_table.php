@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('razon_social'); 
             $table->string('ruc');
-            $table->string('correo');
-            $table->string('telefono');
-            $table->string('direccion');
+            $table->string('correo')->nullable();
+            $table->string('telefono')->nullable();
+            $table->string('direccion')->nullable();
             $table->boolean('estado')->default(true);
             
             $table->timestamps();

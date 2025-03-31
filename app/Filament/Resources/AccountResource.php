@@ -16,8 +16,12 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class AccountResource extends Resource
 {
     protected static ?string $model = Account::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    // nombre del grupo
+    protected static ?string $navigationGroup = 'Maestro';
+    protected static ?string $navigationIcon = 'heroicon-o-credit-card';
+    protected static ?string $navigationLabel = 'Cuentas';
+    protected static ?string $modelLabel = 'Cuenta';
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -32,12 +36,23 @@ class AccountResource extends Resource
                     ->searchable()
                     ->preload()
                     ->live()
-
                     ->required(),
-                Forms\Components\TextInput::make('tipo')
-                    ->label('Tipo de cuenta')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('accounttype_id')
+                    ->label('Tipo')
+                    ->relationship(name: 'accounttype', titleAttribute: 'nombre')
+                    ->searchable()
+                    ->preload()
+                    ->live()
+                    ->required(),
+
+                Forms\Components\Select::make('currency_id')
+                    ->label('Moneda')
+                    ->relationship(name: 'currency', titleAttribute: 'nombre')
+                    ->searchable()
+                    ->preload()
+                    ->live()
+                    ->required(),
+
                 Forms\Components\TextInput::make('numero')
                     ->label('N° de cuenta')
                     ->required()
@@ -59,16 +74,23 @@ class AccountResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nombre')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('tipo')
+                Tables\Columns\TextColumn::make('accountType.nombre')
+                    ->label('Tipo')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('numero')
-                    ->searchable(),
-                Tables\Columns\IconColumn::make('estado')
-                    ->boolean(),
                 Tables\Columns\TextColumn::make('bank.nombre')
                     ->label('Banco')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('currency.nombre')
+                    ->label('Moneda')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('numero')
+                    ->label('Numero de cuenta')
+                    ->searchable(),
+                Tables\Columns\IconColumn::make('estado')
+                    ->boolean(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

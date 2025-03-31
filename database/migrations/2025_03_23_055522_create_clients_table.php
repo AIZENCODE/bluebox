@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
 
             $table->string('nombre');
-            $table->string('correo'); 
+            $table->string('correo')->nullable();
 
-            $table->string('telefono_uno'); 
-            $table->string('telefono_dos'); 
+            $table->string('telefono_uno')->nullable();
+            $table->string('telefono_dos')->nullable();
           
             
             $table->boolean('estado')->default(true);

@@ -10,10 +10,22 @@ class Service extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'fecha_creacion',
-        'fecha_vencimiento',
-        'etapa',
+        'nombre',
+        'descripcion',
+        'precio_min',
+        'precio_max',
         'estado',
-        'id_companie',
     ];
+
+    public function quotations()
+    {
+        return $this->belongsToMany(Quotation::class);
+    }
+
+    public function contracts()
+    {
+        return $this->belongsToMany(Contract::class);
+    }
+
+
 }

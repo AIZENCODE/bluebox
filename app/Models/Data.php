@@ -23,4 +23,9 @@ class Data extends Model
         'direccion_dos',
     ];
     
+    public function accounts()
+    {
+        return $this->belongsToMany(Account::class);
+    }
+
 }

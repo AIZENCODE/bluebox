@@ -16,8 +16,9 @@ return new class extends Migration
             
             $table->string('nombre');
             $table->text('descripcion'); 
-            $table->float('precio_min'); 
-            $table->float('precio_max'); 
+            $table->float('precio_min')->nullable(); 
+            $table->float('precio'); 
+            $table->float('precio_max')->nullable();
             
             $table->boolean('estado')->default(true);
 

@@ -14,10 +14,23 @@ return new class extends Migration
         Schema::create('proyects', function (Blueprint $table) {
             $table->id();
 
+            $table->string('codigo', 20)->unique();
             $table->string('nombre');
-            $table->text('descripcion'); 
-            
+            $table->text('descripcion')->nullable();
+
+            $table->enum('etapa', [
+                'planificacion',
+                'ejecucion',
+                'seguimiento',
+                'finalizado'
+            ])->default('planificacion');
+
             $table->boolean('estado')->default(true);
+
+            $table->foreignId('contract_id')
+            ->nullable()
+            ->constrained('contracts')
+            ->onDelete('cascade');
 
             $table->timestamps();
         });

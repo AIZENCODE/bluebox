@@ -45,4 +45,13 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function proyects()
+    {
+        return $this->belongsToMany(Proyect::class);
+    }
+    public function activities()
+    {
+        return $this->belongsToMany(Activity::class);
+    }
 }

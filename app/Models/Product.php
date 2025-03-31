@@ -15,7 +15,14 @@ class Product extends Model
         'precio_min',
         'precio_max',
         'estado',
-        
     ];
+    public function quotations()
+    {
+        return $this->belongsToMany(Quotation::class);
+    }
 
+    public function contracts()
+    {
+        return $this->belongsToMany(Contract::class);
+    }
 }

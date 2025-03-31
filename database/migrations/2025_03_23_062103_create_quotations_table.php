@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('quotations', function (Blueprint $table) {
             $table->id();
 
+            $table->string('codigo', 20)->unique();
             $table->date('fecha_creacion');
-            $table->date('fecha_vencimiento');
+            $table->integer('days');
             $table->enum('etapa', ['borrador', 'enviada', 'aceptada', 'rechazada'])->default('borrador');
             $table->boolean('estado')->default(true);
         
+            $table->foreignId('igv_id')->constrained('igvs');
             $table->foreignId('companie_id')->constrained('companies');
 
             $table->timestamps();

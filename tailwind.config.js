@@ -8,11 +8,30 @@ export default {
         './resources/**/*.blade.php',
         './resources/**/*.js',
         './resources/**/*.vue',
+        './vendor/filament/**/*.blade.php',
     ],
     theme: {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+            },
+            colors: {
+                primary: {
+                    DEFAULT: '#0d3b66',
+                    50: '#e6f0f8',
+                    100: '#cce0f1',
+                    200: '#99c2e3',
+                    300: '#66a3d6',
+                    400: '#3385c8',
+                    500: '#0d3b66', // color principal
+                    600: '#0b345c',
+                    700: '#092b4d',
+                    800: '#07223e',
+                    900: '#051930',
+                },
+                // Puedes definir otros colores personalizados aquí
+                secondary: '#BA0C2F',
+                accent: '#FFCE00',
             },
         },
     },
