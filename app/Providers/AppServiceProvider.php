@@ -7,6 +7,8 @@ use App\Models\Quotation;
 use App\Observers\ContractObserver;
 use App\Observers\QuotationObserver;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
+use App\View\Components\LayoutClient;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,5 +27,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Quotation::observe(QuotationObserver::class);
         Contract::observe(ContractObserver::class);
+
     }
 }

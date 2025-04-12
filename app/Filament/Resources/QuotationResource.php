@@ -32,12 +32,13 @@ class QuotationResource extends Resource
         return $form
 
             ->schema([
-                Forms\Components\Toggle::make('estado')
-                    ->required(),
                 Forms\Components\TextInput::make('codigo')
                     ->label('Código')
                     ->disabled()
                     ->visible(fn(?Model $record) => $record !== null), // Solo en editar
+                Forms\Components\Toggle::make('estado')
+                    ->required(),
+
                 Section::make('Cotizaciones')
                     ->description('Imformacion de la cotización.')
                     ->schema([
@@ -121,22 +122,80 @@ class QuotationResource extends Resource
                     ])
                     ->columns(2),
 
-                Forms\Components\Repeater::make('productos')
-                    ->label('Productos')
+                Section::make('Productos')
+                    ->description('productos de la cotización.')
                     ->schema([
-                        Forms\Components\Select::make('product_id')
-                            ->label('Producto')
-                            ->options(\App\Models\Product::pluck('nombre', 'id'))
-                            ->required()
-                            ->searchable()
-                            ->preload(),
-                        Forms\Components\TextInput::make('cantidad')->numeric()->required(),
-                        Forms\Components\TextInput::make('precio')->numeric()->required(),
-                    ])
-                    ->defaultItems(1)
-                    ->columns(3)
-                    ->createItemButtonLabel('Agregar producto')
-                    ->columnSpan('full'),
+
+                        Forms\Components\Repeater::make('productos')
+                            ->label(false)
+                            ->schema([
+                                Forms\Components\Select::make('product_id')
+                                    ->label('Producto')
+                                    ->options(function () {
+                                        return \App\Models\Product::where('estado', true)
+                                            ->pluck('nombre', 'id');
+                                    })
+                                    ->searchable()
+                                    ->preload()
+                                    ->required()
+                                    ->live()
+                                    ->afterStateUpdated(function ($state, $set) {
+                                        if ($state) {
+                                            $product = \App\Models\Product::find($state);
+                                            if ($product) {
+                                                $set('precio', $product->precio);
+                                            }
+                                        }
+                                    }),
+                                Forms\Components\TextInput::make('cantidad')
+                                    ->label('Cantidad')
+                                    ->numeric()
+                                    ->default(1)
+                                    ->required()
+                                    ->live()
+                                    ->afterStateUpdated(function ($state, $set, $get) {
+                                        $cantidad = (int) $state;
+                                        $precio = (float) $get('precio');
+                                        $set('subtotal', number_format($cantidad * $precio, 2));
+                                    }),
+                                Forms\Components\TextInput::make('precio')
+                                    ->label('Precio')
+                                    ->numeric()
+                                    ->required()
+                                    ->live()
+                                    ->afterStateUpdated(function ($state, $set, $get) {
+                                        $cantidad = (int) $get('cantidad');
+                                        $precio = (float) $state;
+                                        $set('subtotal', number_format($cantidad * $precio, 2));
+                                    }),
+                                Forms\Components\TextInput::make('subtotal')
+                                    ->label('Subtotal')
+                                    ->disabled()
+                                    ->dehydrated(false),
+                            ])
+                            ->columns(4)
+                            ->defaultItems(0)
+                            ->reorderable(false)
+                            ->collapsible()
+                            ->afterStateHydrated(function ($state, callable $set, ?Model $record) {
+                                if ($record) {
+                                    $productos = $record->products()
+                                        ->withPivot(['cantidad', 'precio'])
+                                        ->get()
+                                        ->map(function ($product) {
+                                            return [
+                                                'product_id' => $product->id,
+                                                'cantidad' => $product->pivot->cantidad,
+                                                'precio' => $product->pivot->precio,
+                                                'subtotal' => number_format($product->pivot->cantidad * $product->pivot->precio, 2),
+                                            ];
+                                        })
+                                        ->toArray();
+                                    $set('productos', $productos);
+                                }
+                            }),
+
+                    ]),
 
                 Section::make('Servicios')
                     ->description('Servicios de la cotización.')
@@ -147,80 +206,141 @@ class QuotationResource extends Resource
                             ->schema([
                                 Forms\Components\Select::make('service_id')
                                     ->label('Servicio')
-                                    ->options(\App\Models\Service::pluck('nombre', 'id'))
+                                    ->options(function () {
+                                        return \App\Models\Service::where('estado', true)
+                                            ->pluck('nombre', 'id');
+                                    })
                                     ->searchable()
                                     ->preload()
-                                    ->reactive()
                                     ->required()
-                                    ->afterStateUpdated(function ($state, callable $set) {
-                                        $service = \App\Models\Service::find($state);
-                                        if ($service) {
-                                            $set(
-                                                'precio_info',
-                                                "Min: S/ " . number_format($service->precio_min ?? 0, 2) . " - " .
-                                                    "Actual: S/ " . number_format($service->precio, 2) . " - " .
-                                                    "Max: S/ " . number_format($service->precio_max ?? 0, 2)
-                                            );
-                                            // $set('precio', $service->precio); 
-                                        } else {
-                                            $set('precio_info', null);
-                                            $set('precio', null);
+                                    ->live()
+                                    ->afterStateUpdated(function ($state, $set) {
+                                        if ($state) {
+                                            $service = \App\Models\Service::find($state);
+                                            if ($service) {
+                                                $set('precio', $service->precio);
+                                            }
                                         }
                                     }),
-
                                 Forms\Components\TextInput::make('cantidad')
                                     ->label('Cantidad')
                                     ->numeric()
-                                    ->live()
+                                    ->default(1)
                                     ->required()
-                                    ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                                    ->live()
+                                    ->afterStateUpdated(function ($state, $set, $get) {
+                                        $cantidad = (int) $state;
                                         $precio = (float) $get('precio');
-                                        $set('subtotal', number_format((float) $state * $precio, 2));
+                                        $set('subtotal', number_format($cantidad * $precio, 2));
                                     }),
-
                                 Forms\Components\TextInput::make('precio')
                                     ->label('Precio')
                                     ->numeric()
-                                    ->step('0.01') // Define el paso de incremento para permitir decimales
-                                    ->live()
                                     ->required()
-                                    ->afterStateUpdated(function ($state, callable $set, callable $get) {
-                                        $cantidad = (float) $get('cantidad');
-                                        $set('subtotal', number_format((float) $state * $cantidad, 2));
+                                    ->live()
+                                    ->afterStateUpdated(function ($state, $set, $get) {
+                                        $cantidad = (int) $get('cantidad');
+                                        $precio = (float) $state;
+                                        $set('subtotal', number_format($cantidad * $precio, 2));
                                     }),
-
-                                    Forms\Components\TextInput::make('subtotal')
+                                Forms\Components\TextInput::make('subtotal')
                                     ->label('Subtotal')
                                     ->disabled()
-                                    ->dehydrated(false) // No lo guarda
-                                    ->reactive() // importante para que escuche cambios
-                                    ->visible()
-                                    ->afterStateUpdated(function ($set, $get) {
-                                        $cantidad = (float) $get('cantidad') ?? 0;
-                                        $precio = (float) $get('precio') ?? 0;
-                                        $set('subtotal', number_format($cantidad * $precio, 2, '.', ''));
-                                    })
-                                    ->afterStateHydrated(function ($set, $get) {
-                                        $cantidad = (float) $get('cantidad') ?? 0;
-                                        $precio = (float) $get('precio') ?? 0;
-                                        $set('subtotal', number_format($cantidad * $precio, 2, '.', ''));
-                                    }),
-                                
-
-                                Forms\Components\Placeholder::make('precio_info')
-                                    ->label('Rango de Precios')
-                                    ->content(fn($get) => nl2br(e($get('precio_info'))) ?? '—')
-                                    ->columnSpanFull(), // Ocupa una columna completa si quieres
+                                    ->dehydrated(false),
                             ])
                             ->columns(4)
-                            ->defaultItems(1)
-                            ->createItemButtonLabel('Agregar servicio')
-                            ->columnSpan('full'),
+                            ->defaultItems(0)
+                            ->reorderable(false)
+                            ->collapsible()
+                            ->afterStateHydrated(function ($state, callable $set, ?Model $record) {
+                                if ($record) {
+                                    $servicios = $record->services()
+                                        ->withPivot(['cantidad', 'precio'])
+                                        ->get()
+                                        ->map(function ($service) {
+                                            return [
+                                                'service_id' => $service->id,
+                                                'cantidad' => $service->pivot->cantidad,
+                                                'precio' => $service->pivot->precio,
+                                                'subtotal' => number_format($service->pivot->cantidad * $service->pivot->precio, 2),
+                                            ];
+                                        })
+                                        ->toArray();
+                                    $set('servicios', $servicios);
+                                }
+                            }),
 
+                    ]),
+
+                Section::make('Totales')
+                    ->description('Resumen de la cotización.')
+                    ->schema([
+                        Forms\Components\Placeholder::make('subtotal_total')
+                            ->label('Subtotal')
+                            ->content(function ($get) {
+                                $productos = $get('productos') ?? [];
+                                $servicios = $get('servicios') ?? [];
+
+                                $total_productos = collect($productos)->sum(function ($item) {
+                                    return (float) str_replace(',', '', $item['subtotal'] ?? 0);
+                                });
+
+                                $total_servicios = collect($servicios)->sum(function ($item) {
+                                    return (float) str_replace(',', '', $item['subtotal'] ?? 0);
+                                });
+
+                                return 'S/ ' . number_format($total_productos + $total_servicios, 2);
+                            }),
+
+                        Forms\Components\Placeholder::make('igv_total')
+                            ->label('IGV')
+                            ->content(function ($get) {
+                                $productos = $get('productos') ?? [];
+                                $servicios = $get('servicios') ?? [];
+
+                                $total_productos = collect($productos)->sum(function ($item) {
+                                    return (float) str_replace(',', '', $item['subtotal'] ?? 0);
+                                });
+
+                                $total_servicios = collect($servicios)->sum(function ($item) {
+                                    return (float) str_replace(',', '', $item['subtotal'] ?? 0);
+                                });
+
+                                $igv_id = $get('igv_id');
+                                $igv = \App\Models\Igv::find($igv_id);
+                                $igv_porcentaje = $igv ? $igv->porcentaje / 100 : 0;
+
+                                $total = $total_productos + $total_servicios;
+                                $igv_monto = $total * $igv_porcentaje;
+
+                                return 'S/ ' . number_format($igv_monto, 2);
+                            }),
+
+                        Forms\Components\Placeholder::make('total_final')
+                            ->label('Total')
+                            ->content(function ($get) {
+                                $productos = $get('productos') ?? [];
+                                $servicios = $get('servicios') ?? [];
+
+                                $total_productos = collect($productos)->sum(function ($item) {
+                                    return (float) str_replace(',', '', $item['subtotal'] ?? 0);
+                                });
+
+                                $total_servicios = collect($servicios)->sum(function ($item) {
+                                    return (float) str_replace(',', '', $item['subtotal'] ?? 0);
+                                });
+
+                                $igv_id = $get('igv_id');
+                                $igv = \App\Models\Igv::find($igv_id);
+                                $igv_porcentaje = $igv ? $igv->porcentaje / 100 : 0;
+
+                                $total = $total_productos + $total_servicios;
+                                $igv_monto = $total * $igv_porcentaje;
+
+                                return 'S/ ' . number_format($total + $igv_monto, 2);
+                            }),
                     ])
-                    ->columns(2),
-
-
+                    ->columns(3),
             ]);
     }
 

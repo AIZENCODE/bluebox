@@ -28,22 +28,23 @@ class Quotation extends Model
     {
         return $this->hasOne(Contract::class);
     }
+
     public function products()
     {
         return $this->belongsToMany(Product::class, 'product_quotation')
             ->withPivot('cantidad', 'precio')
             ->withTimestamps();
     }
-    
+
     public function services()
     {
         return $this->belongsToMany(Service::class, 'quotation_service')
             ->withPivot('cantidad', 'precio')
             ->withTimestamps();
     }
+
     public function igv()
     {
         return $this->belongsTo(Igv::class);
     }
-
 }

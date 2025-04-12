@@ -30,8 +30,10 @@ export default {
                     900: '#051930',
                 },
                 // Puedes definir otros colores personalizados aquí
-                secondary: '#BA0C2F',
-                accent: '#FFCE00',
+                secondary: '#BA0C2F',      // Rojo
+                accent: '#FFCE00',         // Amarillo
+                neutral: '#F4F4F4',        // Gris claro
+                dark: '#1a1a1a',           // Gris oscuro
             },
         },
     },
