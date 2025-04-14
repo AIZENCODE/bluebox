@@ -6,12 +6,14 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Spatie\Permission\Models\Role;
 
 class UserResource extends Resource
 {
@@ -35,7 +37,19 @@ class UserResource extends Resource
                     ->email()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
+                    Select::make('role')
+                    ->label('Rol')
+                    ->options(Role::all()->pluck('name', 'name'))
+                    ->searchable()
+                    ->required()
+                    ->afterStateHydrated(function (callable $set, User $record) {
+                        $set('role', $record->roles->pluck('name')->first());
+                    })
+                    ->afterStateUpdated(function (callable $get, User $record) {
+                        $record->syncRoles([$get('role')]);
+                    })
+                    ->dehydrated(false), // Evita que se guarde como campo en DB    
+                // Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->required()

@@ -5,13 +5,16 @@ namespace Database\Seeders;
 use App\Models\Account;
 use App\Models\AccountType;
 use App\Models\Bank;
+use App\Models\Category;
 use App\Models\Client;
 use App\Models\Companie;
 use App\Models\Currency;
 use App\Models\Data;
 use App\Models\Igv;
+use App\Models\Post;
 use App\Models\Product;
 use App\Models\Service;
+use App\Models\Tag;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -190,6 +193,60 @@ class DatabaseSeeder extends Seeder
         // Asociar con compañías
         $client->companies()->sync([1, 2]); // IDs de las compañías relacionadas
         // Fin clientes
+
+        // Tag 
+
+        Category::create(['name' => 'Tecnología', 'slug' => 'tecnologia']);
+        Category::create(['name' => 'Salud', 'slug' => 'salud']);
+
+        Tag::create(['name' => 'Laravel', 'slug' => 'laravel']);
+        Tag::create(['name' => 'Inteligencia Artificial', 'slug' => 'inteligencia-artificial']);
+        // Fin tag
+
+        // Posts 
+
+        Post::create([
+            'slug' => 'como-mejorar-tu-productividad',
+            'title' => 'Cómo mejorar tu productividad en el trabajo',
+            'excerpt' => 'Consejos prácticos para organizar mejor tu tiempo, mantener la concentración y ser más eficiente día a día.',
+            'category_id' => 1,
+            'author_id' => 1
+        ]);
+
+        Post::create([
+            'slug' => 'tendencias-tecnologicas-2025',
+            'title' => 'Tendencias tecnológicas que marcarán el 2025',
+            'excerpt' => 'Desde inteligencia artificial hasta avances en biotecnología, descubre qué tecnologías dominarán este año.',
+            'category_id' => 1,
+            'author_id' => 1
+        ]);
+
+        Post::create([
+            'slug' => 'guia-wordpress-principiantes',
+            'title' => 'Guía completa de WordPress para principiantes',
+            'excerpt' => 'Aprende a crear y administrar tu sitio web con WordPress paso a paso, sin necesidad de conocimientos previos.',
+            'category_id' => 1,
+            'author_id' => 1
+        ]);
+
+        Post::create([
+            'slug' => 'beneficios-del-ejercicio-diario',
+            'title' => '5 beneficios del ejercicio diario para tu salud',
+            'excerpt' => 'Mejora tu estado físico, mental y emocional con solo 30 minutos de ejercicio al día. Te explicamos por qué.',
+            'category_id' => 1,
+            'author_id' => 1
+        ]);
+
+        Post::create([
+            'slug' => 'mejores-lenguajes-programacion-actualidad',
+            'title' => 'Los mejores lenguajes de programación en la actualidad',
+            'excerpt' => 'Una revisión de los lenguajes más demandados por empresas y desarrolladores en 2025.',
+            'category_id' => 1,
+            'author_id' => 1
+        ]);
+
+
+        // Fin posts
 
     }
 }
