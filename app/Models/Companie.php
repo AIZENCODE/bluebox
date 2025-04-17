@@ -15,6 +15,10 @@ class Companie extends Model
         'ruc',
         'correo',
         'telefono',
+        'idCountry',
+        'idDepartment',
+        'idProvince',
+        'idDistrict',
         'direccion',
         'estado',
     ];
@@ -27,4 +31,23 @@ class Companie extends Model
     {
         return $this->hasMany(Quotation::class);
     }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class,);
+    }
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'idDepartment', 'idDepartment');
+    }
+    public function province()
+    {
+        return $this->belongsTo(Province::class, 'idProvince', 'idProvince');
+    }
+    public function district()
+    {
+        return $this->belongsTo(District::class, 'idDistrict', 'idDistrict');
+    }
+
+
 }

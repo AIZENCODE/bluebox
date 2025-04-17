@@ -18,6 +18,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
 
+
+            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');
+
             $table->timestamps();
         });
     }

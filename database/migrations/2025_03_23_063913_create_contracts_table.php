@@ -27,6 +27,10 @@ return new class extends Migration
             $table->foreignId('quatation_id')->constrained('companies');
 
 
+            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');
+
+
             $table->timestamps();
         });
     }

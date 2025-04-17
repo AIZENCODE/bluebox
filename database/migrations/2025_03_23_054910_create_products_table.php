@@ -19,8 +19,11 @@ return new class extends Migration
             $table->float('precio_min')->nullable();
             $table->float('precio')->nullable();
             $table->float('precio_max')->nullable();
-            
+
             $table->boolean('estado')->default(true);
+
+            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');
 
             $table->timestamps();
             $table->softDeletes();

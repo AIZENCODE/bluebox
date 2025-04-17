@@ -37,6 +37,41 @@ class ClientResource extends Resource
                     ->description('Imformacion del cliente.')
                     ->schema([
 
+
+                        Forms\Components\TextInput::make('dni')
+                            ->label('DNI')
+                            ->maxLength(8)
+                            ->suffixAction(
+                                Forms\Components\Actions\Action::make('Buscar DNI')
+                                    ->icon('heroicon-o-magnifying-glass')
+                                    ->action(function (Forms\Get $get, Forms\Set $set) {
+                                        $dni = $get('dni');
+
+                                        if (!$dni) return;
+
+                                        $response = \Illuminate\Support\Facades\Http::withHeaders([
+                                            'Accept' => 'application/json',
+                                            'Content-Type' => 'application/json',
+                                            'Authorization' => env('API_CONSULTA_RUC_DNI_TOKEN'),
+                                        ])->asForm()->post(env('API_CONSULTA_RUC_DNI') . 'dni', [
+                                            'dni' => $dni,
+                                        ]);
+                                        // dd($response->body());
+                                        $json = $response->json();
+
+                                        if ($response->ok() && ($json['success'] ?? false)) {
+                                            $data = $json['data'];
+
+                                            $set('nombre', $data['nombre_completo'] ?? '');
+                                        } else {
+                                            \Filament\Notifications\Notification::make()
+                                                ->title('Error al consultar DNI')
+                                                ->body('No se encontró información para el DNI ingresado.')
+                                                ->danger()
+                                                ->send();
+                                        }
+                                    })
+                            ),
                         Forms\Components\TextInput::make('nombre')
                             ->required()
                             ->maxLength(255),
@@ -44,7 +79,7 @@ class ClientResource extends Resource
 
                             ->maxLength(255),
 
-                  
+
                         Forms\Components\Select::make('companies')
                             ->label('Compañías')
                             ->relationship(

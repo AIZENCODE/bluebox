@@ -54,10 +54,10 @@ class PostResource extends Resource
 
                 Toggle::make('is_published')
                     ->label('Publicado'),
-                Forms\Components\TextInput::make('slug')
-                    ->disabled() // no editable
-                    ->dehydrated() // igual se guarda en la BD
-                    ->required(),
+                // Forms\Components\TextInput::make('slug')
+                //     ->disabled() // no editable
+                //     ->dehydrated() // igual se guarda en la BD
+                //     ->required(),
 
                 Forms\Components\TextInput::make('title')
                     ->label('Titulo')
@@ -65,11 +65,7 @@ class PostResource extends Resource
                     ->columnSpanFull()
                     ->maxLength(255)
                     ->live() // actualiza en tiempo real mientras escribes
-                    ->afterStateUpdated(function (string $state, callable $set) {
-                        $set('slug', Str::slug($state));
-                    }),
-
-
+                    ->unique(ignoreRecord: true), // esto es clave para editar sin error,
 
 
                 Textarea::make('excerpt')

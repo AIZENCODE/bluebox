@@ -26,6 +26,9 @@ return new class extends Migration
             $table->string('direccion_uno')->nullable();
             $table->string('direccion_dos')->nullable();
 
+            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');
+
             $table->softDeletes();
             $table->timestamps();
         });

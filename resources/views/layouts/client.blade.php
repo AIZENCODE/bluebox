@@ -14,10 +14,10 @@
 
 
 
- <!-- Scripts -->
- @vite(['resources/css/app.css', 'resources/js/app.js'])
- @livewireStyles
-
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
+    @stack('styles')
 </head>
 
 <body class="">
@@ -33,7 +33,10 @@
 
 
     @include('layouts.client.footer')
- @livewireScripts
+    @livewireScripts
+
+
+    @stack('scripts')
 </body>
 
 </html>

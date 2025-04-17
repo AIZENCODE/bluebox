@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('igvs', function (Blueprint $table) {
-            $table->id();
-
-            $table->string('tipo');
-            $table->decimal('porcentaje', 5, 2); // Ej: 18.00
-
-            $table->foreignId('user_id')->nullable()->constrained('users');
-            $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');
-
+        Schema::create('countries', function (Blueprint $table) {
+            $table->unsignedBigInteger('idCountry')->primary(); // Cambiar a BigInt
+            $table->string('country', 100);
+            $table->string('nationality', 100);
             $table->timestamps();
         });
     }
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('igvs');
+        Schema::dropIfExists('countries');
     }
 };

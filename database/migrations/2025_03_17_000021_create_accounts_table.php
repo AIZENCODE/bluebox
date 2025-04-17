@@ -18,10 +18,13 @@ return new class extends Migration
             $table->string('numero');
             $table->string('numero_interbancario')->nullable();
             $table->boolean('estado')->default(true);
-            
+
             $table->foreignId('bank_id')->constrained('banks');
             $table->foreignId('accounttype_id')->constrained('account_types');
             $table->foreignId('currency_id')->constrained('currencies');
+
+            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');
 
             $table->timestamps();
             $table->softDeletes();

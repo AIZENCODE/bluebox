@@ -32,6 +32,9 @@ return new class extends Migration
             ->constrained('contracts')
             ->onDelete('cascade');
 
+            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');
+
             $table->timestamps();
         });
     }

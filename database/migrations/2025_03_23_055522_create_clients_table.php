@@ -15,13 +15,17 @@ return new class extends Migration
             $table->id();
 
             $table->string('nombre');
+            $table->string('dni')->nullable();
             $table->string('correo')->nullable();
 
             $table->string('telefono_uno')->nullable();
             $table->string('telefono_dos')->nullable();
-          
-            
+
+
             $table->boolean('estado')->default(true);
+
+            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');
 
             $table->timestamps();
             $table->softDeletes();

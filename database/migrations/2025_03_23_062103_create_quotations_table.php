@@ -19,9 +19,12 @@ return new class extends Migration
             $table->integer('days');
             $table->enum('etapa', ['borrador', 'enviada', 'aceptada', 'rechazada'])->default('borrador');
             $table->boolean('estado')->default(true);
-        
+
             $table->foreignId('igv_id')->constrained('igvs');
             $table->foreignId('companie_id')->constrained('companies');
+
+            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');
 
             $table->timestamps();
 
