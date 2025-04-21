@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class AccountType extends Model
 {
     protected $fillable = [
-        'nombre',
-        'descripcion',
+        'name',
+        'description',
         
     ];
 

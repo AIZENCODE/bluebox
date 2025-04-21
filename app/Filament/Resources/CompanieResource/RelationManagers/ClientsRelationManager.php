@@ -18,18 +18,18 @@ class ClientsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nombre')
+                Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('correo')
+                Forms\Components\TextInput::make('mail')
 
                     ->maxLength(255),
 
-                Forms\Components\TextInput::make('telefono_uno')
+                Forms\Components\TextInput::make('phone_one')
                     ->tel()
 
                     ->maxLength(255),
-                Forms\Components\TextInput::make('telefono_dos')
+                Forms\Components\TextInput::make('phone_two')
                     ->tel()
 
                     ->maxLength(255),
@@ -42,9 +42,10 @@ class ClientsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('nombre'),
-                Tables\Columns\TextColumn::make('correo'),
-                Tables\Columns\TextColumn::make('telefono_uno'),
+                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('mail'),
+                Tables\Columns\TextColumn::make('phone_one'),
+                Tables\Columns\TextColumn::make('phone_two'),
             ])
             ->filters([
                 //

@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
 
-            $table->string('nombre');
-            $table->string('numero');
-            $table->string('numero_interbancario')->nullable();
-            $table->boolean('estado')->default(true);
+            $table->string('name');
+            $table->string('number');
+            $table->string('interbank_number')->nullable();
+            $table->boolean('state')->default(true);
 
             $table->foreignId('bank_id')->constrained('banks');
             $table->foreignId('accounttype_id')->constrained('account_types');

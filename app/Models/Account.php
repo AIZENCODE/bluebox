@@ -12,14 +12,19 @@ class Account extends Model
 
 
     protected $fillable = [
-        'nombre',
-        'tipo',
-        'numero',
-        'numero_interbancario',
-        'estado',
+        'name',
+        'number',
+        'interbank_number',
+        'state',
+
+        // Relaciones
         'bank_id',
         'accounttype_id',
         'currency_id',
+
+        'user_id',
+        'user_update_id',
+        // Fin relaciones
         
     ];
     public function bank()
@@ -41,6 +46,15 @@ class Account extends Model
         return $this->belongsToMany(Data::class);
     }
     
+    public function user()
+    {
+        return $this->belongsTo(User::class); // 👈 está bien así
+    }
 
+    public function userUpdate()
+    {
+        return $this->belongsTo(User::class, 'user_update_id'); // 👈 por claridad
+    }
+    
 
 }

@@ -14,15 +14,15 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
 
-            $table->string('nombre');
+            $table->string('name');
             $table->string('dni')->nullable();
-            $table->string('correo')->nullable();
+            $table->string('mail')->nullable();
 
-            $table->string('telefono_uno')->nullable();
-            $table->string('telefono_dos')->nullable();
+            $table->string('phone_one')->nullable();
+            $table->string('phone_two')->nullable();
 
 
-            $table->boolean('estado')->default(true);
+            $table->boolean('state')->default(true);
 
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');

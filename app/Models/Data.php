@@ -11,21 +11,34 @@ class Data extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'nombre',
-        'razon_social',
+        'name',
+        'company_name',
         'ruc',
-        'imagen_url',
-        'telefono_uno',
-        'telefono_dos',
-        'correo_uno',
-        'correo_dos',
-        'direccion_uno',
-        'direccion_dos',
+        'image_url',
+        'phone_one',
+        'phone_two',
+        'email_one',
+        'email_two',
+        'address_one',
+        'address_two',
+
+        'user_id',
+        'user_update_id',
     ];
-    
+
     public function accounts()
     {
         return $this->belongsToMany(Account::class);
     }
 
+
+    public function user()
+    {
+        return $this->belongsTo(User::class); // 👈 está bien así
+    }
+
+    public function userUpdate()
+    {
+        return $this->belongsTo(User::class, 'user_update_id'); // 👈 por claridad
+    }
 }

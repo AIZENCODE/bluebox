@@ -7,12 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     protected $fillable = [
-        'nombre',
+        'name',
         'dni',
-        'correo',
-        'telefono_uno',
-        'telefono_dos',
-        'estado',
+        'mail',
+        'phone_one',
+        'phone_two',
+        'state',
+
+        // Relaciones
+        'user_id',
+        'user_update_id',
+        // Fin relaciones
     ];
 
     public function companies()
@@ -20,4 +25,13 @@ class Client extends Model
         return $this->belongsToMany(Companie::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class); // 👈 está bien así
+    }
+
+    public function userUpdate()
+    {
+        return $this->belongsTo(User::class, 'user_update_id'); // 👈 por claridad
+    }
 }

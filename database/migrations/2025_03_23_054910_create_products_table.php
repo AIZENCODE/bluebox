@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
 
-            $table->string('nombre');
-            $table->text('descripcion')->nullable();
-            $table->float('precio_min')->nullable();
-            $table->float('precio')->nullable();
-            $table->float('precio_max')->nullable();
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->float('price_min')->nullable();
+            $table->float('price')->nullable();
+            $table->float('price_max')->nullable();
 
-            $table->boolean('estado')->default(true);
+            $table->boolean('state')->default(true);
 
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');

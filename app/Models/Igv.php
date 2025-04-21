@@ -8,8 +8,8 @@ class Igv extends Model
 {
 
     protected $fillable = [
-        'tipo',
-        'porcentaje',
+        'type',
+        'percentage',
     ];
 
     public function quotations()

@@ -8,8 +8,8 @@ class Bank extends Model
 {
    
     protected $fillable = [
-        'nombre',
-        'descripcion',
+        'name',
+        'description',
         
     ];
 

@@ -4,14 +4,20 @@
       <div class="flex justify-between items-center h-16">
         <!-- Logo -->
         <div class="flex-shrink-0">
-          <a href="/" class="text-2xl font-bold text-blue-600">BlueBox</a>
+          <a href="/" class="text-2xl font-bold text-blue-600">
+          
+
+            <img class="h-7 object-contain" src="{{ asset('img/logos/logo horizontal@4x.png') }}" alt="">
+          </a>
         </div>
 
         <!-- Links -->
         <div class="hidden md:flex space-x-6">
           <a href="/" class="text-gray-700 hover:text-blue-600 transition">Inicio</a>
-          <a href="#features" class="text-gray-700 hover:text-blue-600 transition">Características</a>
-          <a href="#contact" class="text-gray-700 hover:text-blue-600 transition">Contacto</a>
+          <a href="{{ route('nosotros.index') }}" class="text-gray-700 hover:text-blue-600 transition">Nosotros</a>
+          <a href="#contact" class="text-gray-700 hover:text-blue-600 transition">Servicios</a>
+          <a href="#contact" class="text-gray-700 hover:text-blue-600 transition">Blog</a>
+          <a href="{{ route('contactenos.index') }}" class="text-gray-700 hover:text-blue-600 transition">Contacto</a>
         </div>
 
         <!-- Call to action -->
@@ -37,7 +43,7 @@
     <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2">
       <a href="/" class="block text-gray-700 hover:text-blue-600 transition">Inicio</a>
       <a href="#features" class="block text-gray-700 hover:text-blue-600 transition">Características</a>
-      <a href="#contact" class="block text-gray-700 hover:text-blue-600 transition">Contacto</a>
+      <a href="{{ route('contactenos.index') }}" class="block text-gray-700 hover:text-blue-600 transition">Contacto</a>
       <a href="/admin" class="block text-sm bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
         Iniciar sesión
       </a>

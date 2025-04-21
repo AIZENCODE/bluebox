@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('igvs', function (Blueprint $table) {
             $table->id();
 
-            $table->string('tipo');
-            $table->decimal('porcentaje', 5, 2); // Ej: 18.00
+            $table->string('type');
+            $table->decimal('percentage', 5, 2); // Ej: 18.00
 
-            $table->foreignId('user_id')->nullable()->constrained('users');
-            $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');
+            // $table->foreignId('user_id')->nullable()->constrained('users');
+            // $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');
 
             $table->timestamps();
         });

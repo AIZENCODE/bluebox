@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Quotation;
+use Illuminate\Support\Facades\Auth;
 
 class QuotationObserver
 {
@@ -16,6 +17,11 @@ class QuotationObserver
 
     public function creating(Quotation $quotation)
     {
+
+        if (Auth::check()) {
+            $quotation->user_id = Auth::id();
+        }
+
         $lastNumber = Quotation::withTrashed()
             ->where('codigo', 'like', 'COT-%')
             ->selectRaw('MAX(CAST(SUBSTRING(codigo, 5) AS UNSIGNED)) as max_codigo')
@@ -28,6 +34,13 @@ class QuotationObserver
     /**
      * Handle the Quotation "updated" event.
      */
+
+    public function updating(Quotation $quotation)
+    {
+        if (Auth::check()) {
+            $quotation->user_update_id = Auth::id(); // o editor_id, según tu estructura
+        }
+    }
     public function updated(Quotation $quotation): void
     {
         //

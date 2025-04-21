@@ -15,16 +15,16 @@ return new class extends Migration
 
             $table->id();
 
-            $table->string('nombre');
-            $table->string('razon_social');
+            $table->string('name');
+            $table->string('company_name');
             $table->string('ruc');
-            $table->string('imagen_url')->nullable();
-            $table->string('telefono_uno')->nullable();
-            $table->string('telefono_dos')->nullable();
-            $table->string('correo_uno')->nullable();
-            $table->string('correo_dos')->nullable();
-            $table->string('direccion_uno')->nullable();
-            $table->string('direccion_dos')->nullable();
+            $table->string('image_url')->nullable();
+            $table->string('phone_one')->nullable();
+            $table->string('phone_two')->nullable();
+            $table->string('email_one')->nullable();
+            $table->string('email_two')->nullable();
+            $table->string('address_one')->nullable();
+            $table->string('address_two')->nullable();
 
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');

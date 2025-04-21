@@ -28,35 +28,35 @@ class DataResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nombre')
+                Forms\Components\TextInput::make('name')
                     ->label('Nombre de la Empresa')
                     ->required(),
-                Forms\Components\TextInput::make('razon_social')
+                Forms\Components\TextInput::make('company_name')
                     ->label('Razón Social')
                     ->required(),
                 Forms\Components\TextInput::make('ruc')
                     ->label('RUC')
                     ->required(),
-                Forms\Components\TextInput::make('telefono_uno')
+                Forms\Components\TextInput::make('phone_one')
                     ->label('Teléfono Principal')
                     ->tel()
                     ->required(),
-                Forms\Components\TextInput::make('telefono_dos')
+                Forms\Components\TextInput::make('phone_two')
                     ->label('Teléfono Secundario')
                     ->tel()
                     ->nullable(),
-                Forms\Components\TextInput::make('correo_uno')
+                Forms\Components\TextInput::make('email_one')
                     ->label('Correo Principal')
                     ->email()
                     ->required(),
-                Forms\Components\TextInput::make('correo_dos')
+                Forms\Components\TextInput::make('email_two')
                     ->label('Correo Secundario')
                     ->email()
                     ->nullable(),
-                Forms\Components\Textarea::make('direccion_uno')
+                Forms\Components\Textarea::make('address_one')
                     ->label('Dirección Principal')
                     ->required(),
-                Forms\Components\Textarea::make('direccion_dos')
+                Forms\Components\Textarea::make('address_two')
                     ->label('Dirección Secundaria')
                     ->nullable(),
             ]);

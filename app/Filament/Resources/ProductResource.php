@@ -36,19 +36,19 @@ class ProductResource extends Resource
                     ->description('Imformacion del producto.')
                     ->schema([
 
-                        Forms\Components\TextInput::make('nombre')
+                        Forms\Components\TextInput::make('name')
                             ->required()
                             ->maxLength(255)
                             ->columnSpanFull(),
 
-                        Forms\Components\TextInput::make('precio_min')
+                        Forms\Components\TextInput::make('price_min')
                             ->required()
                             ->numeric(),
-                        Forms\Components\TextInput::make('precio_max')
+                        Forms\Components\TextInput::make('price_max')
                             ->required()
                             ->numeric(),
 
-                        Forms\Components\Textarea::make('descripcion')
+                        Forms\Components\Textarea::make('description')
                             ->required()
                             ->columnSpanFull(),
 
@@ -64,28 +64,28 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nombre')
+                Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('precio_min')
+                Tables\Columns\TextColumn::make('price_min')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('precio_max')
+                Tables\Columns\TextColumn::make('price_max')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('estado')
+                Tables\Columns\IconColumn::make('state')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('created_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('updated_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('deleted_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

@@ -31,7 +31,7 @@ class ClientResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Toggle::make('estado')
+                Forms\Components\Toggle::make('state')
                     ->required(),
                 Section::make('Cliente')
                     ->description('Imformacion del cliente.')
@@ -72,11 +72,12 @@ class ClientResource extends Resource
                                         }
                                     })
                             ),
-                        Forms\Components\TextInput::make('nombre')
+                        Forms\Components\TextInput::make('name')
+                            ->label('Nombre')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('correo')
-
+                        Forms\Components\TextInput::make('mail')
+                            ->label('Correo')
                             ->maxLength(255),
 
 
@@ -93,13 +94,13 @@ class ClientResource extends Resource
                             ->required(),
 
 
-                        Forms\Components\TextInput::make('telefono_uno')
+                        Forms\Components\TextInput::make('phone_one')
+                            ->label('Telefono uno')
                             ->tel()
-
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('telefono_dos')
+                        Forms\Components\TextInput::make('phone_two')
+                            ->label('Telefono dos')
                             ->tel()
-
                             ->maxLength(255),
 
 
@@ -112,15 +113,15 @@ class ClientResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nombre')
+                Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('correo')
+                Tables\Columns\TextColumn::make('mail')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('telefono_uno')
+                Tables\Columns\TextColumn::make('phone_one')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('telefono_dos')
+                Tables\Columns\TextColumn::make('phone_two')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('estado')
+                Tables\Columns\IconColumn::make('state')
                     ->boolean()
                     ->toggleable(isToggledHiddenByDefault: true),
                 // Tables\Columns\TextColumn::make('created_at')

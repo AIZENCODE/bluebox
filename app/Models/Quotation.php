@@ -10,13 +10,18 @@ class Quotation extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'codigo',
-        'fecha_creacion',
+        'code',
+        'creation_date',
         'days',
-        'etapa',
-        'estado',
-        'companie_id',
+        'stage',
+        'state',
+
+        // Relaciones
         'igv_id',
+        'companie_id',
+        'user_id',
+        'user_update_id',
+        // Fin relaciones
     ];
 
     public function companie()
@@ -47,4 +52,16 @@ class Quotation extends Model
     {
         return $this->belongsTo(Igv::class);
     }
+
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class); // 👈 está bien así
+    }
+
+    public function userUpdate()
+    {
+        return $this->belongsTo(User::class, 'user_update_id'); // 👈 por claridad
+    }
+
 }

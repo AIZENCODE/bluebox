@@ -41,56 +41,56 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Data::create([
-            'nombre' => 'BlueBox',
+            'name' => 'BlueBox',
             'razon_social' => 'Bluebox S.A.C.',
             'ruc' => '20613432729',
             'telefono_uno' => '936148456',
             'correo_uno' => 'migelo5511@gmail.com',
             'direccion_uno' => 'cinco esquinas',
         ]);
-        // Tipo de cuenta
+        // type de cuenta
         AccountType::create([
-            'nombre' => 'Cuenta corriente',
-            'descripcion' => 'Cuenta normal',
+            'name' => 'Cuenta corriente',
+            'description' => 'Cuenta normal',
         ]);
         AccountType::create([
-            'nombre' => 'Cuenta de ahorro',
-            'descripcion' => 'Cuenta de ahorro para almacenar',
+            'name' => 'Cuenta de ahorro',
+            'description' => 'Cuenta de ahorro para almacenar',
         ]);
-        // Fin tipo de cuenta
+        // Fin type de cuenta
 
         // Bancos
         Bank::create([
-            'nombre' => 'BCP',
-            'descripcion' => 'Banco Bcp',
+            'name' => 'BCP',
+            'description' => 'Banco Bcp',
         ]);
         Bank::create([
-            'nombre' => 'BBVA',
-            'descripcion' => 'Banco BBVA',
+            'name' => 'BBVA',
+            'description' => 'Banco BBVA',
         ]);
         // Fin Bancos
 
         // Moneda
         Currency::create([
-            'nombre' => 'Soles',
-            'descripcion' => 'Moneda Peruana',
-            'simbolo' => 'S/',
+            'name' => 'Soles',
+            'description' => 'Moneda Peruana',
+            'symbol' => 'S/',
         ]);
         Currency::create([
-            'nombre' => 'Dolar',
-            'descripcion' => 'Moneda EEUU',
-            'simbolo' => '$',
+            'name' => 'Dolar',
+            'description' => 'Moneda EEUU',
+            'symbol' => '$',
         ]);
         // Fin moneda
 
         // igv
 
         Igv::create([
-            'tipo' => 'Sujeto a igv',
+            'type' => 'Sujeto a igv',
             'porcentaje' => 18.00,
         ]);
         Igv::create([
-            'tipo' => 'Sin igv',
+            'type' => 'Sin igv',
             'porcentaje' => 00.00,
         ]);
 
@@ -98,7 +98,7 @@ class DatabaseSeeder extends Seeder
 
         // Cuentas
         Account::create([
-            'nombre'              => 'Cuenta Corriente Principal',
+            'name'              => 'Cuenta Corriente Principal',
             'numero'              => '1234567890',
             'numero_interbancario' => '00212345678901234567',
             'estado'              => true,
@@ -107,7 +107,7 @@ class DatabaseSeeder extends Seeder
             'currency_id'         => 1,
         ]);
         Account::create([
-            'nombre'              => 'Cuenta de detraccion',
+            'name'              => 'Cuenta de detraccion',
             'numero'              => '1234567890',
             'numero_interbancario' => '00212345678901234567',
             'estado'              => true,
@@ -119,7 +119,7 @@ class DatabaseSeeder extends Seeder
 
         // inicio compania
         Companie::create([
-            'nombre'        => 'Tech Solutions S.A.C.',
+            'name'        => 'Tech Solutions S.A.C.',
             'razon_social'  => 'Tech Solutions Sociedad Anónima Cerrada',
             'ruc'           => '20123456789',
             'correo'        => 'contacto@techsolutions.com',
@@ -129,7 +129,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Companie::create([
-            'nombre'        => 'AGROINDUSTRIA CASABLANCA',
+            'name'        => 'AGROINDUSTRIA CASABLANCA',
             'razon_social'  => 'AGROINDUSTRIA CASABLANCA S.A.C.',
             'ruc'           => '20452302951',
             'correo'        => 'casabalnca@gmail.com',
@@ -141,8 +141,8 @@ class DatabaseSeeder extends Seeder
 
         // Servicios
         Service::create([
-            'nombre'       => 'Consultoría de Marketing',
-            'descripcion'  => 'Asesoría especializada en estrategias de marketing digital.',
+            'name'       => 'Consultoría de Marketing',
+            'description'  => 'Asesoría especializada en estrategias de marketing digital.',
             'precio'   => 1000.00,
             'precio_min'   => 500.00,
             'precio_max'   => 1500.00,
@@ -150,8 +150,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Service::create([
-            'nombre'       => 'Desarrollo Web',
-            'descripcion'  => 'Creación de sitios web personalizados adaptados a las necesidades del cliente.',
+            'name'       => 'Desarrollo Web',
+            'description'  => 'Creación de sitios web personalizados adaptados a las necesidades del cliente.',
             'precio'   => 1000.00,
             'precio_min'   => 1200.00,
             'precio_max'   => 3000.00,
@@ -162,8 +162,8 @@ class DatabaseSeeder extends Seeder
         // Productos
 
         Product::create([
-            'nombre'       => 'Laptop Lenovo ThinkPad',
-            'descripcion'  => 'Laptop empresarial con procesador Intel Core i7, 16GB RAM y 512GB SSD.',
+            'name'       => 'Laptop Lenovo ThinkPad',
+            'description'  => 'Laptop empresarial con procesador Intel Core i7, 16GB RAM y 512GB SSD.',
             'precio'   => 1000.00,
             'precio_min'   => 3200.00,
             'precio_max'   => 4200.00,
@@ -171,8 +171,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Product::create([
-            'nombre'       => 'Monitor LG 24"',
-            'descripcion'  => 'Monitor LED Full HD de 24 pulgadas, ideal para trabajo y entretenimiento.',
+            'name'       => 'Monitor LG 24"',
+            'description'  => 'Monitor LED Full HD de 24 pulgadas, ideal para trabajo y entretenimiento.',
             'precio'   => 1000.00,
             'precio_min'   => 550.00,
             'precio_max'   => 700.00,
@@ -183,7 +183,7 @@ class DatabaseSeeder extends Seeder
 
         // clientes
         $client = Client::create([
-            'nombre'        => 'Juan Pérez',
+            'name'        => 'Juan Pérez',
             'correo'        => 'juan.perez@example.com',
             'telefono_uno'  => '987654321',
             'telefono_dos'  => '912345678',

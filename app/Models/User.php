@@ -17,7 +17,7 @@ class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles, HasPanelShield;
-  
+
     /**
      * The attributes that are mass assignable.
      *
@@ -65,4 +65,90 @@ class User extends Authenticatable implements FilamentUser
     {
         return true;
     }
+
+    // Relaciones con usuarios en creacion y edicion
+
+    // Accounts
+    public function createdAccounts()
+    {
+        return $this->hasMany(Account::class, 'user_id');
+    }
+    public function updatedAccounts()
+    {
+        return $this->hasMany(Account::class, 'user_update_id');
+    }
+
+    // Fin Accounts
+
+    // Companies
+    public function createdCompanies()
+    {
+        return $this->hasMany(Companie::class, 'user_id');
+    }
+
+    public function updatedCompanies()
+    {
+        return $this->hasMany(Companie::class, 'user_update_id');
+    }
+
+    // Fin companies
+
+
+    // Data
+    public function createdDatas()
+    {
+        return $this->hasMany(Companie::class, 'user_id');
+    }
+    public function updatedDatas()
+    {
+        return $this->hasMany(Companie::class, 'user_update_id');
+    }
+    // Fin Data
+
+    // Productos
+    public function createdProducts()
+    {
+        return $this->hasMany(Product::class, 'user_id');
+    }
+    public function updatedProducts()
+    {
+        return $this->hasMany(Product::class, 'user_update_id');
+    }
+    // Fin Productos
+
+
+    // Clients
+    public function createdClients()
+    {
+        return $this->hasMany(Client::class, 'user_id');
+    }
+    public function updatedClients()
+    {
+        return $this->hasMany(Client::class, 'user_update_id');
+    }
+    // Fin Clients
+
+    // Clients
+    public function createdQuotations()
+    {
+        return $this->hasMany(Quotation::class, 'user_id');
+    }
+    public function updatedQuotations()
+    {
+        return $this->hasMany(Quotation::class, 'user_update_id');
+    }
+    // Fin Clients
+
+
+
+
+    // Fin Relaciones con usuarios en creacion y edicion
+
+
+
+
+
+
+
+
 }

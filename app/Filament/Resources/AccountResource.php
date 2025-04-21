@@ -27,19 +27,19 @@ class AccountResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nombre')
+                Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('bank_id')
                     ->label('Banco')
-                    ->relationship(name: 'bank', titleAttribute: 'nombre')
+                    ->relationship(name: 'bank', titleAttribute: 'name')
                     ->searchable()
                     ->preload()
                     ->live()
                     ->required(),
                 Forms\Components\Select::make('accounttype_id')
                     ->label('Tipo')
-                    ->relationship(name: 'accounttype', titleAttribute: 'nombre')
+                    ->relationship(name: 'accounttype', titleAttribute: 'name')
                     ->searchable()
                     ->preload()
                     ->live()
@@ -53,16 +53,16 @@ class AccountResource extends Resource
                     ->live()
                     ->required(),
 
-                Forms\Components\TextInput::make('numero')
+                Forms\Components\TextInput::make('number')
                     ->label('N° de cuenta')
                     ->required()
                     ->maxLength(255),
 
-                Forms\Components\TextInput::make('numero_interbancario')
+                Forms\Components\TextInput::make('interbank_number')
                     ->label('N° de cuenta interbancaria')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Toggle::make('estado')
+                Forms\Components\Toggle::make('state')
                     ->required(),
 
             ]);
@@ -72,37 +72,37 @@ class AccountResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nombre')
+                Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('accountType.nombre')
+                Tables\Columns\TextColumn::make('accountType.name')
                     ->label('Tipo')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('bank.nombre')
+                Tables\Columns\TextColumn::make('bank.name')
                     ->label('Banco')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('currency.nombre')
+                Tables\Columns\TextColumn::make('currency.name')
                     ->label('Moneda')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('numero')
+                Tables\Columns\TextColumn::make('number')
                     ->label('Numero de cuenta')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('estado')
+                Tables\Columns\IconColumn::make('state')
                     ->boolean(),
 
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('created_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('updated_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('deleted_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
 
-            $table->string('nombre');
-            $table->string('razon_social');
+            $table->string('name');
+            $table->string('company_name');
             $table->string('ruc');
-            $table->string('correo')->nullable();
-            $table->string('telefono')->nullable();
-            $table->string('direccion')->nullable();
-            $table->boolean('estado')->default(true);
+            $table->string('mail')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->boolean('state')->default(true);
 
             $table->foreignId('idCountry')->nullable()->constrained('countries', 'idCountry');
             $table->foreignId('idDepartment')->nullable()->constrained('departments', 'idDepartment');

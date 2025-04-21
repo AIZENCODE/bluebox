@@ -32,18 +32,19 @@ class QuotationResource extends Resource
         return $form
 
             ->schema([
-                Forms\Components\TextInput::make('codigo')
+                Forms\Components\TextInput::make('code')
                     ->label('Código')
                     ->disabled()
                     ->visible(fn(?Model $record) => $record !== null), // Solo en editar
-                Forms\Components\Toggle::make('estado')
+                Forms\Components\Toggle::make('state')
+                    ->label('Estado')
                     ->required(),
 
                 Section::make('Cotizaciones')
                     ->description('Imformacion de la cotización.')
                     ->schema([
 
-                        Forms\Components\DatePicker::make('fecha_creacion')
+                        Forms\Components\DatePicker::make('creation_date')
                             ->label('Fecha de Creación')
                             ->required()
                             ->default(now())
@@ -70,7 +71,7 @@ class QuotationResource extends Resource
                                 $dias = $get('days') ?? 0;
                                 $set('fecha_vencimiento_mostrar', \Carbon\Carbon::parse($fecha)->addDays($dias)->format('d/m/Y'));
                             }),
-                        Forms\Components\Select::make('etapa')
+                        Forms\Components\Select::make('stage')
                             ->label('Etapa')
                             ->options([
                                 'borrador'  => 'Borrador',
@@ -87,8 +88,8 @@ class QuotationResource extends Resource
                             ->label('Compañía')
                             ->relationship(
                                 name: 'companie',
-                                titleAttribute: 'nombre',
-                                modifyQueryUsing: fn(Builder $query) => $query->where('estado', true)
+                                titleAttribute: 'name',
+                                modifyQueryUsing: fn(Builder $query) => $query->where('state', true)
                             )
                             ->searchable()
                             ->preload()
@@ -133,7 +134,7 @@ class QuotationResource extends Resource
                                     ->label('Producto')
                                     ->options(function () {
                                         return \App\Models\Product::where('estado', true)
-                                            ->pluck('nombre', 'id');
+                                            ->pluck('name', 'id');
                                     })
                                     ->searchable()
                                     ->preload()

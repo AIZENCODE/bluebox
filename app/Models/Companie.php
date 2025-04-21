@@ -10,17 +10,24 @@ class Companie extends Model
     // Si tu tabla se llama 'companies' pero el modelo es 'Companie'
     protected $table = 'companies';
     protected $fillable = [
-        'nombre',
-        'razon_social',
+        'name',
+        'company_name',
         'ruc',
-        'correo',
-        'telefono',
+        'mail',
+        'phone',
+        'address',
+        'state',
+
+        // Relaciones
         'idCountry',
         'idDepartment',
         'idProvince',
         'idDistrict',
-        'direccion',
-        'estado',
+
+        'user_id',
+        'user_update_id',
+        // Fin relaciones
+
     ];
 
     public function clients()
@@ -49,5 +56,14 @@ class Companie extends Model
         return $this->belongsTo(District::class, 'idDistrict', 'idDistrict');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class); // 👈 está bien así
+    }
+
+    public function userUpdate()
+    {
+        return $this->belongsTo(User::class, 'user_update_id'); // 👈 por claridad
+    }
 
 }

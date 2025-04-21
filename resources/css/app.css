@@ -1,7 +1,35 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
+:root {
+
+    /* colores */
+
+    
+
+    /* Fin Colores */
+
+
+    /* tipografias */
+    --font-one: "Inter", sans-serif;
+
+
+    /* Fin tipografias */
+    --primary-color: #3490dc;
+    --secondary-color: #ffed4a;
+    --font-size: 16px;
+    --spacing-unit: 1rem;
+}
+
+
+h1,h2,h3,h4,h5,h6{
+    font-family: var(--font-one);
+    font-weight: 700;
+}
 
 *{
     /* outline: 1px solid red; */
