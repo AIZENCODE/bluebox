@@ -22,8 +22,8 @@ return new class extends Migration
                 ->constrained('products')
                 ->onDelete('cascade');
 
-            $table->integer('cantidad');
-            $table->float('precio');
+            $table->integer('amount');
+            $table->float('price');
 
             $table->timestamps();
         });

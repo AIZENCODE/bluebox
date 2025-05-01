@@ -34,9 +34,14 @@ class Companie extends Model
     {
         return $this->belongsToMany(Client::class);
     }
-    public function quotation()
+    public function quotations()
     {
         return $this->hasMany(Quotation::class);
+    }
+
+    public function contracts()
+    {
+        return $this->hasMany(Contract::class);
     }
 
     public function country()
@@ -55,6 +60,7 @@ class Companie extends Model
     {
         return $this->belongsTo(District::class, 'idDistrict', 'idDistrict');
     }
+
 
     public function user()
     {

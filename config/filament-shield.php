@@ -87,5 +87,5 @@ return [
     'register_role_policy' => [
         'enabled' => true,
     ],
-
+'register_role_resource' => false,
 ];

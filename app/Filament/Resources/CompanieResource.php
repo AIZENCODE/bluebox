@@ -36,7 +36,8 @@ class CompanieResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Toggle::make('estado')
+                Forms\Components\Toggle::make('state')
+                    ->label('Estado')
                     ->default(true)
                     ->required(),
                 Section::make('Compañia')
@@ -89,10 +90,12 @@ class CompanieResource extends Resource
                                     })
                             ),
 
-                        Forms\Components\TextInput::make('nombre')
+                        Forms\Components\TextInput::make('name')
+                            ->label('Nombre')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('razon_social')
+                        Forms\Components\TextInput::make('company_name')
+                            ->label('Razón Social')
                             ->required()
                             ->maxLength(255),
                         // Forms\Components\TextInput::make('ruc')
@@ -142,14 +145,17 @@ class CompanieResource extends Resource
                             ->required(),
 
 
-                        Forms\Components\TextInput::make('direccion')
+                        Forms\Components\TextInput::make('address')
+                            ->label('Dirección')
                             ->required()
                             ->maxLength(255),
 
-                        Forms\Components\TextInput::make('correo')
+                        Forms\Components\TextInput::make('mail')
+                            ->label('Correo')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('telefono')
+                        Forms\Components\TextInput::make('phone')
+                            ->label('Teléfono')
                             ->tel()
                             ->required()
                             ->maxLength(255),
@@ -164,30 +170,34 @@ class CompanieResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nombre')
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Nombre')
                     ->searchable(),
                 // Tables\Columns\TextColumn::make('razon_social')
                 //     ->searchable(),
                 Tables\Columns\TextColumn::make('ruc')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('correo')
+                Tables\Columns\TextColumn::make('mail')
+                    ->label('Correo')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('telefono')
+                Tables\Columns\TextColumn::make('phone')
+                    ->label('Teléfono')
                     ->searchable(),
                 // Tables\Columns\TextColumn::make('direccion')
                 //     ->searchable(),
-                Tables\Columns\IconColumn::make('estado')
+                Tables\Columns\IconColumn::make('state')
+                    ->label('Estado')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Creado')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Ultima Modificación')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('created_at')
+                //     ->label('Creado')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('updated_at')
+                //     ->label('Ultima Modificación')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
                 // Tables\Columns\TextColumn::make('deleted_at')
                 //     ->dateTime()
                 //     ->sortable()

@@ -20,6 +20,10 @@ class PostObserver
             $post->user_id = Auth::id();
         }
 
+        if ($post->is_published) {
+            $post->published_at = now();
+        }
+
         // Evita sobrescribir si ya viene seteado desde un factory
         if (empty($post->slug)) {
             $post->slug = Str::slug($post->title, '-');
@@ -29,8 +33,13 @@ class PostObserver
     public function updating(Post $post)
     {
         if (Auth::check()) {
-            $post->updated_by = Auth::id(); // o editor_id, según tu estructura
+            $post->user_update_id = Auth::id(); // o editor_id, según tu estructura
         }
+
+        if ($post->is_published) {
+            $post->published_at = now();
+        }
+
 
         // Si quieres actualizar el slug cuando cambia el título:
         if ($post->isDirty('title')) {

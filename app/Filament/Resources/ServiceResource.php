@@ -30,26 +30,34 @@ class ServiceResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Toggle::make('estado')
+                Forms\Components\Toggle::make('state')
                     ->required(),
                 Section::make('Servicios')
                     ->description('Imformacion del servicio.')
                     ->schema([
 
-                        Forms\Components\TextInput::make('nombre')
+                        Forms\Components\TextInput::make('name')
+                            ->label('Nombre')
                             ->required()
-                            ->maxLength(255)
-                            ->columnSpanFull(),
+                            ->maxLength(255),
 
-                        Forms\Components\TextInput::make('precio_min')
-                            ->required()
-                            ->numeric(),
-                        Forms\Components\TextInput::make('precio_max')
-                            ->required()
+                        Forms\Components\TextInput::make('price_min')
+                            ->label('Precio Mínimo')
+                            // ->required()
                             ->numeric(),
 
-                        Forms\Components\Textarea::make('descripcion')
+                        Forms\Components\TextInput::make('price')
+                            ->label('Precio')
                             ->required()
+                            ->numeric(),
+                        Forms\Components\TextInput::make('price_max')
+                            ->label('Precio Máximo')
+                            // ->required()
+                            ->numeric(),
+
+                        Forms\Components\Textarea::make('description')
+                            ->label('Descripción')
+                            // ->required()
                             ->columnSpanFull(),
 
                     ])
@@ -64,28 +72,38 @@ class ServiceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nombre')
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Nombre')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('precio_min')
+                Tables\Columns\TextColumn::make('price_min')
+                    ->label('Precio Mínimo')
+                    ->color('danger')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('precio_max')
+                Tables\Columns\TextColumn::make('price')
+                    ->label('Precio')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('estado')
+                Tables\Columns\TextColumn::make('price_max')
+                    ->label('Precio Máximo')
+                    ->color('info')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\IconColumn::make('state')
+                    ->label('Estado')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('created_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('updated_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('deleted_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

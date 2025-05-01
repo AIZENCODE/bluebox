@@ -21,6 +21,7 @@ class Quotation extends Model
         'companie_id',
         'user_id',
         'user_update_id',
+        'currency_id',
         // Fin relaciones
     ];
 
@@ -37,15 +38,21 @@ class Quotation extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class, 'product_quotation')
-            ->withPivot('cantidad', 'precio')
+            ->withPivot('amount', 'price')
             ->withTimestamps();
     }
 
     public function services()
     {
         return $this->belongsToMany(Service::class, 'quotation_service')
-            ->withPivot('cantidad', 'precio')
+            ->withPivot('amount', 'price')
             ->withTimestamps();
+    }
+
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
     }
 
     public function igv()
@@ -53,7 +60,7 @@ class Quotation extends Model
         return $this->belongsTo(Igv::class);
     }
 
-    
+
     public function user()
     {
         return $this->belongsTo(User::class); // 👈 está bien así

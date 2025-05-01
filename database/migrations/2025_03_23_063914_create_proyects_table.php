@@ -14,18 +14,18 @@ return new class extends Migration
         Schema::create('proyects', function (Blueprint $table) {
             $table->id();
 
-            $table->string('codigo', 20)->unique();
-            $table->string('nombre');
-            $table->text('descripcion')->nullable();
+            $table->string('code', 20)->unique();
+            $table->string('name');
+            $table->text('description')->nullable();
 
-            $table->enum('etapa', [
+            $table->enum('stage', [
                 'planificacion',
                 'ejecucion',
                 'seguimiento',
                 'finalizado'
             ])->default('planificacion');
 
-            $table->boolean('estado')->default(true);
+            $table->boolean('state')->default(true);
 
             $table->foreignId('contract_id')
             ->nullable()

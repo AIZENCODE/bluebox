@@ -30,26 +30,35 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Toggle::make('estado')
+                Forms\Components\Toggle::make('state')
+                    ->label('Estado')
                     ->required(),
                 Section::make('Producto')
                     ->description('Imformacion del producto.')
                     ->schema([
 
                         Forms\Components\TextInput::make('name')
+                            ->label('Nombre')
                             ->required()
-                            ->maxLength(255)
-                            ->columnSpanFull(),
+                            ->maxLength(255),
 
                         Forms\Components\TextInput::make('price_min')
+                            ->label('Precio Mínimo')
+                            // ->required()
+                            ->numeric(),
+                        Forms\Components\TextInput::make('price')
+                            ->label('Precio')
                             ->required()
                             ->numeric(),
+
                         Forms\Components\TextInput::make('price_max')
-                            ->required()
+                            ->label('Precio Máximo')
+                            // ->required()
                             ->numeric(),
 
                         Forms\Components\Textarea::make('description')
-                            ->required()
+                            ->label('Descripción')
+                            // ->required()
                             ->columnSpanFull(),
 
                     ])
@@ -65,14 +74,24 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nombre')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price_min')
+                    ->label('Precio Mínimo')
+                    ->color('danger')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('price')
+                    ->label('Precio')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('price_max')
+                    ->label('Precio Máximo')
                     ->numeric()
+                    ->color('info')
                     ->sortable(),
                 Tables\Columns\IconColumn::make('state')
+                    ->label('Estado')
                     ->boolean(),
                 // Tables\Columns\TextColumn::make('created_at')
                 //     ->dateTime()

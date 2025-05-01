@@ -23,6 +23,7 @@ class User extends Authenticatable implements FilamentUser
      *
      * @var list<string>
      */
+
     protected $fillable = [
         'name',
         'email',
@@ -139,8 +140,62 @@ class User extends Authenticatable implements FilamentUser
     }
     // Fin Clients
 
+    // Servicios
+    public function createdServices()
+    {
+        return $this->hasMany(Service::class, 'user_id');
+    }
+    public function updatedServices()
+    {
+        return $this->hasMany(Service::class, 'user_update_id');
+    }
+    // Fin servicios
 
+    // Contracts
 
+    public function createdContracts()
+    {
+        return $this->hasMany(Contract::class, 'user_id');
+    }
+
+    public function updatedContracts()
+    {
+        return $this->hasMany(Contract::class, 'user_update_id');
+    }
+    // Fin contracts
+
+    // Proyects
+    public function createdProyects()
+    {
+        return $this->hasMany(Proyect::class, 'user_id');
+    }
+    public function updatedProyects()
+    {
+        return $this->hasMany(Proyect::class, 'user_update_id');
+    }
+    // Fin Proyects
+
+    // Posts
+    public function createdPosts()
+    {
+        return $this->hasMany(Post::class, 'user_id');
+    }
+    public function updatedPosts()
+    {
+        return $this->hasMany(Post::class, 'user_update_id');
+    }
+    // Fin Posts
+
+    // Categories
+    public function createdCategories()
+    {
+        return $this->hasMany(Category::class, 'user_id');
+    }
+    public function updatedCategories()
+    {
+        return $this->hasMany(Category::class, 'user_update_id');
+    }
+    // Fin Categories
 
     // Fin Relaciones con usuarios en creacion y edicion
 

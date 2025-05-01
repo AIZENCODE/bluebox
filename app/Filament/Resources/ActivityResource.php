@@ -31,19 +31,19 @@ class ActivityResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nombre')
+                Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('descripcion')
+                Forms\Components\Textarea::make('description')
                     ->required()
                     ->columnSpanFull(),
-                Forms\Components\DatePicker::make('fecha_inicio')
+                Forms\Components\DatePicker::make('start_date')
                     ->required(),
-                Forms\Components\DatePicker::make('fecha_fin')
+                Forms\Components\DatePicker::make('end_date')
                     ->required(),
-                Forms\Components\TextInput::make('etapa')
+                Forms\Components\TextInput::make('stage')
                     ->required(),
-                Forms\Components\Toggle::make('estado')
+                Forms\Components\Toggle::make('state')
                     ->required(),
                 Forms\Components\TextInput::make('proyect_id')
                     ->required()
@@ -55,7 +55,7 @@ class ActivityResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nombre')
+                Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('fecha_inicio')
                     ->date()
@@ -69,14 +69,14 @@ class ActivityResource extends Resource
                 Tables\Columns\TextColumn::make('proyect_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('created_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('updated_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

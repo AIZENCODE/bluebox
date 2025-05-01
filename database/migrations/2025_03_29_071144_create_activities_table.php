@@ -14,13 +14,18 @@ return new class extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
 
-            $table->string('nombre');
-            $table->text('descripcion')->nullable(); 
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin');
-            $table->enum('etapa', ['Planificación', 'Ejecución', 'Monitoreo y Control', 'Cierre'])->default('Planificación');
-            $table->boolean('estado')->default(true);
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->enum('stage', ['Planificación', 'Ejecución', 'Monitoreo y Control', 'Cierre'])->default('Planificación');
+            $table->boolean('state')->default(true);
+
+
             $table->foreignId('proyect_id')->constrained('contracts');
+
+            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');
 
 
 

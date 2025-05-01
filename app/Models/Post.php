@@ -15,7 +15,14 @@ class Post extends Model
         'body',
         'image_url',
         'is_published',
+
+        // Relaciones
         'published_at',
+
+        'user_id',
+        'user_updated_id',
+
+
     ];
 
 
@@ -24,9 +31,19 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
-    
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class); // 👈 está bien así
+    }
+
+    public function userUpdate()
+    {
+        return $this->belongsTo(User::class, 'user_update_id'); // 👈 por claridad
     }
 }

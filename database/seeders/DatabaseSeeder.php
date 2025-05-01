@@ -10,6 +10,7 @@ use App\Models\Client;
 use App\Models\Companie;
 use App\Models\Currency;
 use App\Models\Data;
+use App\Models\Exchange;
 use App\Models\Igv;
 use App\Models\Post;
 use App\Models\Product;
@@ -42,211 +43,338 @@ class DatabaseSeeder extends Seeder
 
         Data::create([
             'name' => 'BlueBox',
-            'razon_social' => 'Bluebox S.A.C.',
+            'company_name' => 'Bluebox S.A.C.',
             'ruc' => '20613432729',
-            'telefono_uno' => '936148456',
-            'correo_uno' => 'migelo5511@gmail.com',
-            'direccion_uno' => 'cinco esquinas',
+            'phone_one' => '936148456',
+            'email_one' => 'migelo5511@gmail.com',
+            'address_one' => 'cinco esquinas',
         ]);
         // type de cuenta
-        AccountType::create([
-            'name' => 'Cuenta corriente',
-            'description' => 'Cuenta normal',
-        ]);
-        AccountType::create([
-            'name' => 'Cuenta de ahorro',
-            'description' => 'Cuenta de ahorro para almacenar',
+        AccountType::insert([
+            [
+                'name' => 'Cuenta corriente',
+                'description' => 'Cuenta normal',
+            ],
+            [
+                'name' => 'Cuenta de ahorro',
+                'description' => 'Cuenta de ahorro para almacenar',
+            ],
         ]);
         // Fin type de cuenta
 
         // Bancos
-        Bank::create([
-            'name' => 'BCP',
-            'description' => 'Banco Bcp',
-        ]);
-        Bank::create([
-            'name' => 'BBVA',
-            'description' => 'Banco BBVA',
+        Bank::insert([
+            [
+                'name' => 'Interbank',
+                'description' => 'Banco Interbank',
+            ],
+            [
+                'name' => 'Scotiabank',
+                'description' => 'Banco Scotiabank',
+            ],
+            [
+                'name' => 'BBVA',
+                'description' => 'Banco BBVA Continental',
+            ],
         ]);
         // Fin Bancos
 
         // Moneda
-        Currency::create([
-            'name' => 'Soles',
-            'description' => 'Moneda Peruana',
-            'symbol' => 'S/',
-        ]);
-        Currency::create([
-            'name' => 'Dolar',
-            'description' => 'Moneda EEUU',
-            'symbol' => '$',
+        Currency::insert([
+            [
+                'name' => 'Dolar',
+                'description' => 'Moneda EEUU',
+                'symbol' => '$',
+            ],
+            [
+                'name' => 'Soles',
+                'description' => 'Moneda Peruana',
+                'symbol' => 'S/',
+            ],
         ]);
         // Fin moneda
 
         // igv
-
-        Igv::create([
-            'type' => 'Sujeto a igv',
-            'porcentaje' => 18.00,
+        Igv::insert([
+            [
+                'type' => 'Sujeto a igv',
+                'percentage' => 18.00,
+            ],
+            [
+                'type' => 'Sin igv',
+                'percentage' => 00.00,
+            ],
         ]);
-        Igv::create([
-            'type' => 'Sin igv',
-            'porcentaje' => 00.00,
-        ]);
-
         // Fin igv
 
         // Cuentas
-        Account::create([
-            'name'              => 'Cuenta Corriente Principal',
-            'numero'              => '1234567890',
-            'numero_interbancario' => '00212345678901234567',
-            'estado'              => true,
-            'bank_id'             => 1,
-            'accounttype_id'      => 1,
-            'currency_id'         => 1,
-        ]);
-        Account::create([
-            'name'              => 'Cuenta de detraccion',
-            'numero'              => '1234567890',
-            'numero_interbancario' => '00212345678901234567',
-            'estado'              => true,
-            'bank_id'             => 1,
-            'accounttype_id'      => 1,
-            'currency_id'         => 1,
+        Account::insert([
+            [
+                'name'              => 'Cuenta Corriente Principal',
+                'number'              => '1234567890',
+                'interbank_number' => '00212345678901234567',
+                'state'              => true,
+                'bank_id'             => 1,
+                'accounttype_id'      => 1,
+                'currency_id'         => 1,
+            ],
+            [
+                'name'              => 'Cuenta de detraccion',
+                'number'              => '1234567890',
+                'interbank_number' => '00212345678901234567',
+                'state'              => true,
+                'bank_id'             => 1,
+                'accounttype_id'      => 1,
+                'currency_id'         => 1,
+            ],
+
         ]);
         // Fin de cuentas
 
-        // inicio compania
-        Companie::create([
-            'name'        => 'Tech Solutions S.A.C.',
-            'razon_social'  => 'Tech Solutions Sociedad Anónima Cerrada',
-            'ruc'           => '20123456789',
-            'correo'        => 'contacto@techsolutions.com',
-            'telefono'      => '012345678',
-            'direccion'     => 'Av. Innovación 123, Lima',
-            'estado'        => true, // true para activo, false para inactivo
-        ]);
-
-        Companie::create([
-            'name'        => 'AGROINDUSTRIA CASABLANCA',
-            'razon_social'  => 'AGROINDUSTRIA CASABLANCA S.A.C.',
-            'ruc'           => '20452302951',
-            'correo'        => 'casabalnca@gmail.com',
-            'telefono'      => '012345678',
-            'direccion'     => 'Nro. S/n Fnd. la Calera',
-            'estado'        => true, // true para activo, false para inactivo
-        ]);
-        // Fin compania
-
         // Servicios
-        Service::create([
-            'name'       => 'Consultoría de Marketing',
-            'description'  => 'Asesoría especializada en estrategias de marketing digital.',
-            'precio'   => 1000.00,
-            'precio_min'   => 500.00,
-            'precio_max'   => 1500.00,
+        Service::insert([
+            [
+                'name'       => 'Consultoría de Marketing',
+                'description'  => 'Asesoría especializada en estrategias de marketing digital.',
+                'price'   => 1000.00,
+                'price_min'   => 500.00,
+                'price_max'   => 1500.00,
+            ],
+            [
+                'name'       => 'Desarrollo Web',
+                'description'  => 'Creación de sitios web personalizados adaptados a las necesidades del cliente.',
+                'price'   => 1000.00,
+                'price_min'   => 1200.00,
+                'price_max'   => 3000.00,
+            ]
 
-        ]);
 
-        Service::create([
-            'name'       => 'Desarrollo Web',
-            'description'  => 'Creación de sitios web personalizados adaptados a las necesidades del cliente.',
-            'precio'   => 1000.00,
-            'precio_min'   => 1200.00,
-            'precio_max'   => 3000.00,
-            'estado'       => true,
         ]);
         // Fin Servicios
 
         // Productos
+        Product::insert([
+            [
+                'name'       => 'Laptop Lenovo ThinkPad',
+                'description'  => 'Laptop empresarial con procesador Intel Core i7, 16GB RAM y 512GB SSD.',
+                'price'   => 1000.00,
+                'price_min'   => 3200.00,
+                'price_max'   => 4200.00,
+            ],
+            [
+                'name'       => 'Smartphone Samsung Galaxy S21',
+                'description'  => 'Teléfono inteligente con pantalla AMOLED de 6.2", cámara triple y 128GB de almacenamiento.',
+                'price'   => 1000.00,
+                'price_min'   => 1500.00,
+                'price_max'   => 2000.00,
+            ],
+            [
+                'name'       => 'Impresora HP LaserJet Pro',
+                'description'  => 'Impresora láser monocromática, ideal para oficinas pequeñas.',
+                'price'   => 1000.00,
+                'price_min'   => 300.00,
+                'price_max'   => 500.00,
+            ]
 
-        Product::create([
-            'name'       => 'Laptop Lenovo ThinkPad',
-            'description'  => 'Laptop empresarial con procesador Intel Core i7, 16GB RAM y 512GB SSD.',
-            'precio'   => 1000.00,
-            'precio_min'   => 3200.00,
-            'precio_max'   => 4200.00,
-            'estado'       => true,
         ]);
-
-        Product::create([
-            'name'       => 'Monitor LG 24"',
-            'description'  => 'Monitor LED Full HD de 24 pulgadas, ideal para trabajo y entretenimiento.',
-            'precio'   => 1000.00,
-            'precio_min'   => 550.00,
-            'precio_max'   => 700.00,
-            'estado'       => true,
-        ]);
-
         // Fin productos
+
+        // Inicio compania
+        Companie::insert([
+            [
+                'name'        => 'Tech Solutions S.A.C.',
+                'company_name'  => 'Tech Solutions Sociedad Anónima Cerrada',
+                'ruc'           => '20123456789',
+                'mail'        => 'bluebox.ccruces@gmail.com',
+                'phone'      => '012345678',
+                'address'     => 'Av. Innovación 123, Lima',
+                'state'        => true, // true para activo, false para inactivo
+            ],
+            [
+                'name'        => 'AGROINDUSTRIA CASABLANCA',
+                'company_name'  => 'AGROINDUSTRIA CASABLANCA S.A.C.',
+                'ruc'           => '20452302951',
+                'mail'        => 'aizencode@gmail.com',
+                'phone'      => '012345678',
+                'address'     => 'Nro. S/n Fnd. la Calera',
+                'state'        => true, // true para activo, false para inactivo
+            ]
+
+        ]);
+        // Fin compania
 
         // clientes
         $client = Client::create([
             'name'        => 'Juan Pérez',
-            'correo'        => 'juan.perez@example.com',
-            'telefono_uno'  => '987654321',
-            'telefono_dos'  => '912345678',
-            'estado'        => true,
+            'mail'        => 'migelo5511@gmail.com',
+            'phone_one'  => '987654321',
+            'phone_two'  => '912345678',
+            'state'        => true,
         ]);
-
         // Asociar con compañías
         $client->companies()->sync([1, 2]); // IDs de las compañías relacionadas
         // Fin clientes
 
-        // Tag 
 
-        Category::create(['name' => 'Tecnología', 'slug' => 'tecnologia']);
-        Category::create(['name' => 'Salud', 'slug' => 'salud']);
+        // Categoria
+        Category::insert([
+            [
+                'name' => 'Desarrollo Web',
+                'slug' => 'desarrollo-web'
+            ],
+            [
+                'name' => 'Marketing Digital',
+                'slug' => 'marketing-digital'
+            ],
+            [
+                'name' => 'E-commerce',
+                'slug' => 'e-commerce'
+            ],
+            [
+                'name' => 'Diseño Gráfico',
+                'slug' => 'diseno-grafico'
+            ],
+        ]);
+        // Fin categoria
 
-        Tag::create(['name' => 'Laravel', 'slug' => 'laravel']);
-        Tag::create(['name' => 'Inteligencia Artificial', 'slug' => 'inteligencia-artificial']);
+        // Tag
+        Tag::insert([
+            [
+                'name' => 'JavaScript',
+                'slug' => 'javascript'
+            ],
+            [
+                'name' => 'PHP',
+                'slug' => 'php'
+            ],
+            [
+                'name' => 'HTML',
+                'slug' => 'html'
+            ],
+            [
+                'name' => 'CSS',
+                'slug' => 'css'
+            ],
+            [
+                'name' => 'React',
+                'slug' => 'react'
+            ],
+            [
+                'name' => 'Vue.js',
+                'slug' => 'vuejs'
+            ],
+            [
+                'name' => 'Node.js',
+                'slug' => 'nodejs'
+            ],
+        ]);
         // Fin tag
 
-        // Posts 
+        // Posts
+        Post::insert([
+            [
+                'slug' => 'introduccion-a-html-css',
+                'title' => 'Introducción a HTML y CSS para principiantes',
+                'excerpt' => 'Aprende los fundamentos de HTML y CSS para crear tus primeras páginas web.',
+                'category_id' => 1,
+                'author_id' => 1
+            ],
 
-        Post::create([
-            'slug' => 'como-mejorar-tu-productividad',
-            'title' => 'Cómo mejorar tu productividad en el trabajo',
-            'excerpt' => 'Consejos prácticos para organizar mejor tu tiempo, mantener la concentración y ser más eficiente día a día.',
-            'category_id' => 1,
-            'author_id' => 1
+            [
+                'slug' => 'mejores-practicas-seo',
+                'title' => 'Mejores prácticas de SEO en 2025',
+                'excerpt' => 'Descubre las estrategias más efectivas para mejorar el posicionamiento de tu sitio web en los motores de búsqueda.',
+                'category_id' => 1,
+                'author_id' => 1
+            ],
+            [
+                'slug' => 'guia-marketing-redes-sociales',
+                'title' => 'Guía de marketing en redes sociales para empresas',
+                'excerpt' => 'Aprende a utilizar las redes sociales para impulsar tu negocio y conectar con tu audiencia.',
+                'category_id' => 1,
+                'author_id' => 1
+            ],
+
+            [
+                'slug' => 'tendencias-diseno-grafico-2025',
+                'title' => 'Tendencias de diseño gráfico para el 2025',
+                'excerpt' => 'Explora las tendencias más innovadoras en diseño gráfico que marcarán el año.',
+                'category_id' => 1,
+                'author_id' => 1
+            ],
+
+            [
+                'slug' => 'como-crear-un-ecommerce-exitoso',
+                'title' => 'Cómo crear un e-commerce exitoso desde cero',
+                'excerpt' => 'Guía paso a paso para lanzar tu tienda online y atraer clientes.',
+                'category_id' => 1,
+                'author_id' => 1
+            ],
+            [
+                'slug' => 'mejores-practicas-seguridad-web',
+                'title' => 'Mejores prácticas de seguridad web en 2025',
+                'excerpt' => 'Asegura tu sitio web con estas recomendaciones de seguridad actualizadas.',
+                'category_id' => 1,
+                'author_id' => 1
+            ],
+
+            [
+                'slug' => 'como-optimizar-tu-sitio-web',
+                'title' => 'Cómo optimizar tu sitio web para mejorar la velocidad',
+                'excerpt' => 'Consejos y herramientas para hacer que tu sitio web cargue más rápido.',
+                'category_id' => 1,
+                'author_id' => 1
+            ],
+            [
+                'slug' => 'estrategias-email-marketing-2025',
+                'title' => 'Estrategias de email marketing para 2025',
+                'excerpt' => 'Descubre cómo mejorar tus campañas de email marketing y aumentar tu tasa de conversión.',
+                'category_id' => 1,
+                'author_id' => 1
+            ],
+
+            [
+                'slug' => 'como-usar-google-analytics',
+                'title' => 'Cómo usar Google Analytics para analizar tu tráfico web',
+                'excerpt' => 'Aprende a interpretar los datos de Google Analytics y optimiza tu estrategia digital.',
+                'category_id' => 1,
+                'author_id' => 1
+            ],
+
         ]);
-
-        Post::create([
-            'slug' => 'tendencias-tecnologicas-2025',
-            'title' => 'Tendencias tecnológicas que marcarán el 2025',
-            'excerpt' => 'Desde inteligencia artificial hasta avances en biotecnología, descubre qué tecnologías dominarán este año.',
-            'category_id' => 1,
-            'author_id' => 1
-        ]);
-
-        Post::create([
-            'slug' => 'guia-wordpress-principiantes',
-            'title' => 'Guía completa de WordPress para principiantes',
-            'excerpt' => 'Aprende a crear y administrar tu sitio web con WordPress paso a paso, sin necesidad de conocimientos previos.',
-            'category_id' => 1,
-            'author_id' => 1
-        ]);
-
-        Post::create([
-            'slug' => 'beneficios-del-ejercicio-diario',
-            'title' => '5 beneficios del ejercicio diario para tu salud',
-            'excerpt' => 'Mejora tu estado físico, mental y emocional con solo 30 minutos de ejercicio al día. Te explicamos por qué.',
-            'category_id' => 1,
-            'author_id' => 1
-        ]);
-
-        Post::create([
-            'slug' => 'mejores-lenguajes-programacion-actualidad',
-            'title' => 'Los mejores lenguajes de programación en la actualidad',
-            'excerpt' => 'Una revisión de los lenguajes más demandados por empresas y desarrolladores en 2025.',
-            'category_id' => 1,
-            'author_id' => 1
-        ]);
-
-
         // Fin posts
+
+
+        // Tipo de cambio
+
+        Exchange::insert([
+            [
+                'from_currency_id' => 1,
+                'to_currency_id' => 2,
+                'rate' => 3.50,
+                'date' => now(), // Hoy
+            ],
+            [
+                'from_currency_id' => 1,
+                'to_currency_id' => 2,
+                'rate' => 3.48,
+                'date' => now()->subDay(), // 1 día antes
+            ],
+            [
+                'from_currency_id' => 1,
+                'to_currency_id' => 2,
+                'rate' => 3.45,
+                'date' => now()->subDays(2), // 2 días antes
+            ],
+            [
+                'from_currency_id' => 1,
+                'to_currency_id' => 2,
+                'rate' => 3.43,
+                'date' => now()->subDays(3), // 3 días antes
+            ],
+        ]);
+
+        // Fin tipo de cambio
 
     }
 }

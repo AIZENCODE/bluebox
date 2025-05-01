@@ -64,7 +64,7 @@ class PostResource extends Resource
                     ->required()
                     ->columnSpanFull()
                     ->maxLength(255)
-                    ->live() // actualiza en tiempo real mientras escribes
+
                     ->unique(ignoreRecord: true), // esto es clave para editar sin error,
 
 
@@ -98,7 +98,8 @@ class PostResource extends Resource
                     ->image()
                     ->disk('public')
                     ->directory('posts')
-                    ->preserveFilenames(),
+                    ->preserveFilenames()
+                    ->columnSpanFull(),
 
                 Select::make('category_id')
                     ->label('Categoría')
@@ -115,15 +116,10 @@ class PostResource extends Resource
                     ->label('Etiquetas')
                     ->multiple()
                     ->preload()
-                    ->searchable()
-                    ->required(),
+                    ->searchable(),
+                // ->required(),
 
 
-
-                DatePicker::make('published_at')
-                    ->label('Fecha de publicación')
-                    ->seconds(false)
-                    ->nullable(),
             ]);
     }
 

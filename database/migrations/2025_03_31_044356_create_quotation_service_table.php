@@ -21,9 +21,9 @@ return new class extends Migration
             $table->foreignId('service_id')
                 ->constrained('services')
                 ->onDelete('cascade');
-            
-            $table->integer('cantidad');
-            $table->float('precio');
+
+            $table->integer('amount');
+            $table->float('price');
 
             $table->timestamps();
         });

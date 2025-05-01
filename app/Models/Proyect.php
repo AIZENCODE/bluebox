@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Proyect extends Model
 {
     protected $fillable = [
-        'codigo',
-        'nombre',
-        'estado',
-        'etapa',
+        'code',
+        'name',
+        'description',
+        'state',
+        'stage',
         'contract_id',
 
     ];
@@ -23,5 +24,16 @@ class Proyect extends Model
     public function activities()
     {
         return $this->hasMany(Activity::class);
+    }
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class); // 👈 está bien así
+    }
+
+    public function userUpdate()
+    {
+        return $this->belongsTo(User::class, 'user_update_id'); // 👈 por claridad
     }
 }

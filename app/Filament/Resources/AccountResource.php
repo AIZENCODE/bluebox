@@ -6,6 +6,7 @@ use App\Filament\Resources\AccountResource\Pages;
 use App\Filament\Resources\AccountResource\RelationManagers;
 use App\Models\Account;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -27,44 +28,52 @@ class AccountResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Select::make('bank_id')
-                    ->label('Banco')
-                    ->relationship(name: 'bank', titleAttribute: 'name')
-                    ->searchable()
-                    ->preload()
-                    ->live()
-                    ->required(),
-                Forms\Components\Select::make('accounttype_id')
-                    ->label('Tipo')
-                    ->relationship(name: 'accounttype', titleAttribute: 'name')
-                    ->searchable()
-                    ->preload()
-                    ->live()
-                    ->required(),
-
-                Forms\Components\Select::make('currency_id')
-                    ->label('Moneda')
-                    ->relationship(name: 'currency', titleAttribute: 'nombre')
-                    ->searchable()
-                    ->preload()
-                    ->live()
-                    ->required(),
-
-                Forms\Components\TextInput::make('number')
-                    ->label('N° de cuenta')
-                    ->required()
-                    ->maxLength(255),
-
-                Forms\Components\TextInput::make('interbank_number')
-                    ->label('N° de cuenta interbancaria')
-                    ->required()
-                    ->maxLength(255),
                 Forms\Components\Toggle::make('state')
+                    ->label('Estado')
                     ->required(),
+                Section::make('Cuentas Bancarias')
+                    ->description('Imformacion de cuentas bancarias.')
+                    ->columns(2)
+                    ->schema([
 
+                        Forms\Components\TextInput::make('name')
+                            ->label('Nombre')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\Select::make('bank_id')
+                            ->label('Banco')
+                            ->relationship(name: 'bank', titleAttribute: 'name')
+                            ->searchable()
+                            ->preload()
+                            ->live()
+                            ->required(),
+                        Forms\Components\Select::make('accounttype_id')
+                            ->label('Tipo')
+                            ->relationship(name: 'accounttype', titleAttribute: 'name')
+                            ->searchable()
+                            ->preload()
+                            ->live()
+                            ->required(),
+
+                        Forms\Components\Select::make('currency_id')
+                            ->label('Moneda')
+                            ->relationship(name: 'currency', titleAttribute: 'name')
+                            ->searchable()
+                            ->preload()
+                            ->live()
+                            ->required(),
+
+                        Forms\Components\TextInput::make('number')
+                            ->label('N° de cuenta')
+                            ->required()
+                            ->maxLength(255),
+
+                        Forms\Components\TextInput::make('interbank_number')
+                            ->label('N° de cuenta interbancaria')
+                            ->required()
+                            ->maxLength(255),
+
+                    ])
             ]);
     }
 
@@ -73,6 +82,7 @@ class AccountResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nombre')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('accountType.name')
                     ->label('Tipo')
@@ -89,6 +99,7 @@ class AccountResource extends Resource
                     ->label('Numero de cuenta')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('state')
+                    ->label('Estado')
                     ->boolean(),
 
                 // Tables\Columns\TextColumn::make('created_at')

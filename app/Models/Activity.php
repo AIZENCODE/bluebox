@@ -8,12 +8,15 @@ class Activity extends Model
 {
     protected $fillable = [
         'nombre',
-        'descripcion',
-        'fecha_inicio',
-        'fecha_fin',
-        'etapa',
-        'estado',
-        'contract_id',
+        'description',
+        'start_date',
+        'end_date',
+        'stage',
+        'state',
+
+        'proyect_id',
+        'user_id',
+        'user_update_id',
     ];
     public function users()
     {
@@ -23,5 +26,15 @@ class Activity extends Model
     public function proyect()
     {
         return $this->belongsTo(Proyect::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class); // 👈 está bien así
+    }
+
+    public function userUpdate()
+    {
+        return $this->belongsTo(User::class, 'user_update_id'); // 👈 por claridad
     }
 }

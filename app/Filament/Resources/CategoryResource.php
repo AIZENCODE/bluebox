@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
+use Filament\Notifications\Notification;
+use Filament\Support\Exceptions\Halt;
+
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
@@ -34,28 +37,25 @@ class CategoryResource extends Resource
         return $form
             ->schema([
                 Forms\Components\FileUpload::make('image_url')
-                ->label('Imagen')
-                ->image()
-                ->directory('categories')
-                ->disk('public')
-                ->visibility('public')
-                ->preserveFilenames()
-                ->columnSpanFull()
-                ->required(false),
+                    ->label('Imagen')
+                    ->image()
+                    ->directory('categories')
+                    ->disk('public')
+                    ->visibility('public')
+                    ->preserveFilenames()
+                    ->columnSpanFull()
+                    ->required(false),
+
                 Forms\Components\TextInput::make('name')
                     ->label('Nombre')
                     ->required()
                     ->maxLength(255)
-                    ->live() // actualiza en tiempo real mientras escribes
-                    ->afterStateUpdated(function (string $state, callable $set) {
-                        $set('slug', Str::slug($state));
-                    }),
+                    ->columnSpanFull()
+                    ->live()
+                    ->unique(ignoreRecord: true),
 
-                Forms\Components\TextInput::make('slug')
-                    ->disabled() // no editable
-                    ->dehydrated() // igual se guarda en la BD
-                    ->required(),
-            
+
+
                 Forms\Components\Textarea::make('description')
                     ->maxLength(255)
                     ->columnSpanFull()
@@ -88,7 +88,22 @@ class CategoryResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+
+                Tables\Actions\DeleteAction::make()
+                    ->before(function ($record) {
+                        if ($record->posts()->count() > 0) {
+                            Notification::make()
+                                ->title('No se puede eliminar la categoría')
+                                ->body('Esta categoría tiene articulos asociados.')
+                                ->danger()
+                                ->send();
+
+                            // Detener la acción completamente
+                            throw new Halt();
+                        }
+                    }),
+
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

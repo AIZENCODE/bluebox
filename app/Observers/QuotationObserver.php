@@ -2,8 +2,11 @@
 
 namespace App\Observers;
 
+use App\Mail\QuotationMailable;
 use App\Models\Quotation;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class QuotationObserver
 {
@@ -23,13 +26,14 @@ class QuotationObserver
         }
 
         $lastNumber = Quotation::withTrashed()
-            ->where('codigo', 'like', 'COT-%')
-            ->selectRaw('MAX(CAST(SUBSTRING(codigo, 5) AS UNSIGNED)) as max_codigo')
-            ->value('max_codigo');
+            ->where('code', 'like', 'COT-%')
+            ->selectRaw('MAX(CAST(SUBSTRING(code, 5) AS UNSIGNED)) as max_code')
+            ->value('max_code');
 
         $nextNumber = $lastNumber ? $lastNumber + 1 : 1;
 
-        $quotation->codigo = 'COT-' . str_pad($nextNumber, 9, '0', STR_PAD_LEFT);
+        $quotation->code = 'COT-' . str_pad($nextNumber, 9, '0', STR_PAD_LEFT);
+
     }
     /**
      * Handle the Quotation "updated" event.
@@ -40,6 +44,8 @@ class QuotationObserver
         if (Auth::check()) {
             $quotation->user_update_id = Auth::id(); // o editor_id, según tu estructura
         }
+
+
     }
     public function updated(Quotation $quotation): void
     {

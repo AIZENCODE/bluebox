@@ -14,18 +14,19 @@ return new class extends Migration
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();
 
-            $table->string('codigo', 20)->unique();
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin');
-            $table->text('descripcion')->nullable();
-            $table->boolean('estado')->default(true);
+            $table->string('code', 20)->unique();
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->text('description')->nullable();
+            $table->boolean('state')->default(true);
             // Aquí definimos el campo 'etapa' como enum en la BD
-            $table->enum('etapa', ['inicio', 'proceso', 'finalizado'])->default('inicio');
+            $table->enum('stage', ['inicio', 'proceso', 'finalizado'])->default('inicio');
 
+            $table->foreignId('quatation_id')->nullable()->constrained('quotations');
+            $table->foreignId('companie_id')->constrained('companies');
 
-
-            $table->foreignId('quatation_id')->constrained('companies');
-
+            $table->foreignId('igv_id')->nullable()->constrained('igvs');
+            $table->foreignId('currency_id')->nullable()->constrained('currencies');
 
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');

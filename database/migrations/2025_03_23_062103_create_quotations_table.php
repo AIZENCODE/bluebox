@@ -22,6 +22,7 @@ return new class extends Migration
 
             $table->foreignId('igv_id')->constrained('igvs');
             $table->foreignId('companie_id')->constrained('companies');
+            $table->foreignId('currency_id')->constrained('currencies');
 
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');

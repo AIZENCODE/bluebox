@@ -11,6 +11,7 @@
         "filament/filament": "^3.3",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
+        "mokhosh/filament-kanban": "^2.10",
         "pxlrbt/filament-excel": "^2.4"
     },
     "require-dev": {

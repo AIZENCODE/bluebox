@@ -62,7 +62,7 @@ class ClientResource extends Resource
                                         if ($response->ok() && ($json['success'] ?? false)) {
                                             $data = $json['data'];
 
-                                            $set('nombre', $data['nombre_completo'] ?? '');
+                                            $set('name', $data['nombres'] . ' ' . $data['apellido_paterno'] . ' ' . $data['apellido_materno'] ?? '');
                                         } else {
                                             \Filament\Notifications\Notification::make()
                                                 ->title('Error al consultar DNI')
@@ -85,13 +85,12 @@ class ClientResource extends Resource
                             ->label('Compañías')
                             ->relationship(
                                 name: 'companies',
-                                titleAttribute: 'nombre',
-                                modifyQueryUsing: fn(Builder $query) => $query->where('estado', true)
+                                titleAttribute: 'name',
+                                modifyQueryUsing: fn(Builder $query) => $query->where('state', true)
                             )
                             ->searchable()
                             ->preload()
-                            ->live()
-                            ->required(),
+                            ->live(),
 
 
                         Forms\Components\TextInput::make('phone_one')
@@ -114,16 +113,20 @@ class ClientResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nombre')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('mail')
+                    ->label('Correo')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone_one')
+                    ->label('Telefono uno')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone_two')
+                    ->label('Telefono dos')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('state')
-                    ->boolean()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Estado')
+                    ->boolean(),
                 // Tables\Columns\TextColumn::make('created_at')
                 //     ->dateTime()
                 //     ->sortable()

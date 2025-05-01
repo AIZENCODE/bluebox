@@ -39,18 +39,12 @@ class TagResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label('Título')
+                    ->label('Nombre')
                     ->required()
                     ->maxLength(255)
-                    ->live() // actualiza en tiempo real mientras escribes
-                    ->afterStateUpdated(function (string $state, callable $set) {
-                        $set('slug', Str::slug($state));
-                    }),
-
-                Forms\Components\TextInput::make('slug')
-                    ->disabled() // no editable
-                    ->dehydrated() // igual se guarda en la BD
-                    ->required(),
+                    ->columnSpanFull()
+                    ->live()
+                    ->unique(ignoreRecord: true),
 
                 Forms\Components\Textarea::make('description')
                     ->label('Descripcion')

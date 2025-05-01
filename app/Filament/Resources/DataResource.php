@@ -6,6 +6,7 @@ use App\Filament\Resources\DataResource\Pages;
 use App\Filament\Resources\DataResource\RelationManagers;
 use App\Models\Data;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -28,37 +29,44 @@ class DataResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->label('Nombre de la Empresa')
-                    ->required(),
-                Forms\Components\TextInput::make('company_name')
-                    ->label('Razón Social')
-                    ->required(),
-                Forms\Components\TextInput::make('ruc')
-                    ->label('RUC')
-                    ->required(),
-                Forms\Components\TextInput::make('phone_one')
-                    ->label('Teléfono Principal')
-                    ->tel()
-                    ->required(),
-                Forms\Components\TextInput::make('phone_two')
-                    ->label('Teléfono Secundario')
-                    ->tel()
-                    ->nullable(),
-                Forms\Components\TextInput::make('email_one')
-                    ->label('Correo Principal')
-                    ->email()
-                    ->required(),
-                Forms\Components\TextInput::make('email_two')
-                    ->label('Correo Secundario')
-                    ->email()
-                    ->nullable(),
-                Forms\Components\Textarea::make('address_one')
-                    ->label('Dirección Principal')
-                    ->required(),
-                Forms\Components\Textarea::make('address_two')
-                    ->label('Dirección Secundaria')
-                    ->nullable(),
+
+                Section::make('Empresa')
+                    ->description('Imformacion de la empresa.')
+                    ->columns(2)
+                    ->schema([
+
+                        Forms\Components\TextInput::make('name')
+                            ->label('Nombre de la Empresa')
+                            ->required(),
+                        Forms\Components\TextInput::make('company_name')
+                            ->label('Razón Social')
+                            ->required(),
+                        Forms\Components\TextInput::make('ruc')
+                            ->label('RUC')
+                            ->required(),
+                        Forms\Components\TextInput::make('phone_one')
+                            ->label('Teléfono Principal')
+                            ->tel()
+                            ->required(),
+                        Forms\Components\TextInput::make('phone_two')
+                            ->label('Teléfono Secundario')
+                            ->tel()
+                            ->nullable(),
+                        Forms\Components\TextInput::make('email_one')
+                            ->label('Correo Principal')
+                            ->email()
+                            ->required(),
+                        Forms\Components\TextInput::make('email_two')
+                            ->label('Correo Secundario')
+                            ->email()
+                            ->nullable(),
+                        Forms\Components\TextInput::make('address_one')
+                            ->label('Dirección Principal')
+                            ->required(),
+                        Forms\Components\TextInput::make('address_two')
+                            ->label('Dirección Secundaria')
+                            ->nullable(),
+                    ])
             ]);
     }
 
