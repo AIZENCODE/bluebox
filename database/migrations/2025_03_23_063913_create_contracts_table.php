@@ -15,14 +15,31 @@ return new class extends Migration
             $table->id();
 
             $table->string('code', 20)->unique();
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->string('name');
+            $table->string('document')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->text('description')->nullable();
             $table->boolean('state')->default(true);
             // Aquí definimos el campo 'etapa' como enum en la BD
-            $table->enum('stage', ['inicio', 'proceso', 'finalizado'])->default('inicio');
+            $table->enum(
+                'stage',
+                [
+                    'pendiente',
+                    'enviado',
+                    'inicio',
+                    'proceso',
+                    'finalizado',
+                    'cancelado'
+                ]
+            )->default('pendiente');
 
-            $table->foreignId('quatation_id')->nullable()->constrained('quotations');
+            $table->boolean('mail')->default(false);
+            $table->date('mail_date')->nullable();
+
+
+
+            $table->foreignId('quotation_id')->nullable()->constrained('quotations');
             $table->foreignId('companie_id')->constrained('companies');
 
             $table->foreignId('igv_id')->nullable()->constrained('igvs');
@@ -33,6 +50,7 @@ return new class extends Migration
 
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

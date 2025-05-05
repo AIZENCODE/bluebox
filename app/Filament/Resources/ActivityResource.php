@@ -6,7 +6,9 @@ use App\Filament\Resources\ActivityResource\Pages;
 use App\Filament\Resources\ActivityResource\RelationManagers;
 use App\Models\Activity;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -31,23 +33,71 @@ class ActivityResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\DatePicker::make('start_date')
-                    ->required(),
-                Forms\Components\DatePicker::make('end_date')
-                    ->required(),
-                Forms\Components\TextInput::make('stage')
-                    ->required(),
-                Forms\Components\Toggle::make('state')
-                    ->required(),
-                Forms\Components\TextInput::make('proyect_id')
-                    ->required()
-                    ->numeric(),
+
+                Section::make('Actividad')
+                    ->description('Informacion de la actividad.')
+                    ->columns(2)
+                    ->schema([
+
+                        Forms\Components\TextInput::make('name')
+                            ->label('Nombre')
+                            ->required()
+                            ->maxLength(255),
+
+                        Forms\Components\DatePicker::make('start_date')
+                            ->label('Fecha de Inicio')
+                        // ->required()
+                        ,
+                        Forms\Components\DatePicker::make('end_date')
+                            ->label('Fecha de Fin')
+                        // ->required()
+                        ,
+                        Forms\Components\Select::make('stage')
+                            ->label('Etapa')
+                            ->options([
+                                'pendiente' => 'Pendiente',
+                                'en_progreso' => 'En Progreso',
+                                'en_revision' => 'En Revisión',
+                                'finalizada' => 'Finalizada',
+                                'bloqueada' => 'Bloqueada',
+                            ])
+                            ->required(),
+                        // Forms\Components\Toggle::make('state')
+                        //     ->required(),
+                        Forms\Components\Select::make('proyect_id')
+                            ->relationship('proyect', 'name')
+                            ->required()
+                            ->preload()
+                            ->live()
+                            ->afterStateUpdated(function (Set $set) {
+                                $set('users', null);
+                            })
+                            ->searchable()
+                            ->label('Proyecto'),
+                        Forms\Components\Select::make('users')
+                            ->label('Usuarios')
+                            ->multiple()
+                            ->searchable()
+                            ->preload()
+
+                            ->options(function (callable $get) {
+                                $proyectId = $get('proyect_id'); // o el ID que tengas del proyecto
+
+                                if (!$proyectId) {
+                                    return [];
+                                }
+
+                                return \App\Models\User::whereHas('proyects', function ($query) use ($proyectId) {
+                                    $query->where('proyects.id', $proyectId);
+                                })->pluck('name', 'id');
+                            }),
+                        Forms\Components\Textarea::make('description')
+                            ->label('Descripción')
+                            // ->required()
+                            ->columnSpanFull(),
+
+
+                    ])
             ]);
     }
 
@@ -55,7 +105,13 @@ class ActivityResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+
+                Tables\Columns\TextColumn::make('proyect.name')
+                    ->label('Proyecto')
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('Nombre')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('fecha_inicio')
                     ->date()
@@ -64,11 +120,11 @@ class ActivityResource extends Resource
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('etapa'),
-                Tables\Columns\IconColumn::make('estado')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('proyect_id')
-                    ->numeric()
-                    ->sortable(),
+                // Tables\Columns\IconColumn::make('estado')
+                //     ->boolean(),
+
+
+
                 // Tables\Columns\TextColumn::make('created_at')
                 //     ->dateTime()
                 //     ->sortable()
@@ -94,7 +150,7 @@ class ActivityResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            // RelationManagers\UsersRelationManager::class,
         ];
     }
 

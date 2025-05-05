@@ -16,13 +16,14 @@ return new class extends Migration
 
             $table->string('name');
             $table->text('description')->nullable();
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->enum('stage', ['Planificación', 'Ejecución', 'Monitoreo y Control', 'Cierre'])->default('Planificación');
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->enum('stage', ['pendiente', 'en_progreso', 'en_revision', 'finalizada', 'bloqueada'])->default('pendiente');
+
             $table->boolean('state')->default(true);
 
 
-            $table->foreignId('proyect_id')->constrained('contracts');
+            $table->foreignId('proyect_id')->constrained('proyects'); 
 
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');

@@ -15,9 +15,14 @@ return new class extends Migration
             $table->id();
 
             $table->string('code', 20)->unique();
+            $table->string('name');
             $table->date('creation_date');
             $table->integer('days');
             $table->enum('stage', ['borrador', 'enviada', 'aceptada', 'rechazada'])->default('borrador');
+
+            // $table->boolean('mail')->default(false);
+            $table->date('mail_date')->nullable();
+
             $table->boolean('state')->default(true);
 
             $table->foreignId('igv_id')->constrained('igvs');

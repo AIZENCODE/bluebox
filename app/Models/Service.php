@@ -33,7 +33,9 @@ class Service extends Model
 
     public function contracts()
     {
-        return $this->belongsToMany(Contract::class);
+        return $this->belongsToMany(Contract::class)
+        ->withPivot(['amount', 'price'])
+        ->withTimestamps();
     }
 
 

@@ -2,16 +2,23 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class Proyect extends Model
 {
+
+    use SoftDeletes;
     protected $fillable = [
         'code',
         'name',
         'description',
         'state',
         'stage',
+        // 'mail',
+        'mail_date',
+
+        // relaciones
         'contract_id',
 
     ];
@@ -26,6 +33,10 @@ class Proyect extends Model
         return $this->hasMany(Activity::class);
     }
 
+    public function contract()
+    {
+        return $this->belongsTo(Contract::class);
+    }
 
     public function user()
     {

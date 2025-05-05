@@ -11,10 +11,13 @@ class Quotation extends Model
 
     protected $fillable = [
         'code',
+        'name',
         'creation_date',
         'days',
         'stage',
         'state',
+        // 'mail',
+        'mail_date',
 
         // Relaciones
         'igv_id',

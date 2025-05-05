@@ -14,9 +14,9 @@ class ContractObserver
     public function creating(Contract $contract)
     {
 
-        $max = Contract::withTrashed()->max('codigo'); // Incluye eliminados si usas SoftDeletes
+        $max = Contract::withTrashed()->max('code'); // Incluye eliminados si usas SoftDeletes
         $number = $max ? ((int) str_replace('CTR-', '', $max)) + 1 : 1;
-        $contract->codigo = 'CTR-' . str_pad($number, 9, '0', STR_PAD_LEFT);
+        $contract->code = 'CTR-' . str_pad($number, 9, '0', STR_PAD_LEFT);
         
     }
 

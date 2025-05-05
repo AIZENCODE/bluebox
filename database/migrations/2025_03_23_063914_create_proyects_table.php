@@ -19,23 +19,35 @@ return new class extends Migration
             $table->text('description')->nullable();
 
             $table->enum('stage', [
-                'planificacion',
-                'ejecucion',
+                'iniciado',
+                'en_proceso',
+                'en_desarrollo',
+                'en_pruebas',
+                'en_espera',
+                'en_espera_revision',
                 'seguimiento',
                 'finalizado'
-            ])->default('planificacion');
+            ])->default('iniciado');
 
             $table->boolean('state')->default(true);
 
+
+            // $table->boolean('mail')->default(false);
+            $table->date('mail_date')->nullable();
+
+            $table->datetime('start_date')->nullable();
+            $table->datetime('end_date')->nullable();
+
             $table->foreignId('contract_id')
-            ->nullable()
-            ->constrained('contracts')
-            ->onDelete('cascade');
+                ->nullable()
+                ->constrained('contracts')
+                ->onDelete('cascade');
 
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->foreignId('user_update_id')->nullable()->constrained('users', 'id');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

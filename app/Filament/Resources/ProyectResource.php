@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProyectResource extends Resource
@@ -33,23 +34,51 @@ class ProyectResource extends Resource
     {
         return $form
             ->schema([
-                Section::make('Proyectos')
-                    ->description('Imformacion del proyecto.')
-                    ->schema([
 
-                        Forms\Components\TextInput::make('nombre')
+                Forms\Components\TextInput::make('code')
+                    ->label('Código')
+                    ->disabled()
+                    ->visible(fn(?Model $record) => $record !== null), // Solo en editar
+
+                Section::make('Proyectos')
+                    ->description('Informacion del proyecto.')
+                  
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Nombre')
                             ->required()
+                            ->columnSpanFull()
                             ->maxLength(255),
-                        Forms\Components\Textarea::make('descripcion')
-                            ->required()
+                        Forms\Components\Select::make('contract_id')
+                            ->relationship('contract', 'code'),
+
+                        Forms\Components\DatePicker::make('start_date')
+                            ->label('Fecha de Inicio'),
+                        Forms\Components\DatePicker::make('end_date')
+                            ->label('Fecha de Fin'),
+
+                        Forms\Components\Select::make('stage')
+                            ->label('Etapa')
+                            ->options([
+                                'iniciado' => 'Iniciado',
+                                'en_proceso' => 'Analisis',
+                                'en_desarrollo' => 'Desarrollo',
+                                'en_pruebas' => 'Pruebas',
+                                'en_espera' => 'En Espera',
+                                'en_espera_revision' => 'En Espera Revision',
+                                'seguimiento' => 'Seguimiento',
+                                'finalizado' => 'Finalizado',
+                            ])
+                            ->required(),
+                        Forms\Components\Textarea::make('description')
+                            ->label('Descripción')
+                            
                             ->columnSpanFull(),
-                        Forms\Components\TextInput::make('etapa')
-                            ->required(),
-                        Forms\Components\Toggle::make('estado')
-                            ->required(),
-                        Forms\Components\TextInput::make('contract_id')
-                            ->numeric()
-                            ->default(null),
+
+
+                        // Forms\Components\Toggle::make('estado')
+                        //     ->required(),
+
 
                     ])
                     ->columns(2),
@@ -60,22 +89,28 @@ class ProyectResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nombre')
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Nombre')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('etapa'),
-                Tables\Columns\IconColumn::make('estado')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('contract_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('stage')
+                    ->label('Etapa')
+
+                    ->sortable()
+                    ->searchable(),
+                // Tables\Columns\IconColumn::make('estado')
+                //     ->boolean(),
+                Tables\Columns\TextColumn::make('contract.code')
+                    ->label('Contrato')
+                    ->placeholder('Sin contrato') // ✅ reemplaza ifNone
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('created_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('updated_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -93,7 +128,7 @@ class ProyectResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\UsersRelationManager::class,
         ];
     }
 

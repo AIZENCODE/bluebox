@@ -10,8 +10,10 @@ use App\Models\Contract;
 use App\Models\Data;
 use App\Models\Post;
 use App\Models\Product;
+use App\Models\Proyect;
 use App\Models\Quotation;
 use App\Models\Tag;
+use App\Models\Ticket;
 use App\Observers\AccountObserver;
 use App\Observers\CategoryObserver;
 use App\Observers\ClientObserver;
@@ -20,8 +22,10 @@ use App\Observers\ContractObserver;
 use App\Observers\DataObserver;
 use App\Observers\PostObserver;
 use App\Observers\ProductObserver;
+use App\Observers\ProyectObserver;
 use App\Observers\QuotationObserver;
 use App\Observers\TagObserver;
+use App\Observers\TicketObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use App\View\Components\LayoutClient;
@@ -51,6 +55,8 @@ class AppServiceProvider extends ServiceProvider
         Client::observe(ClientObserver::class);
         Category::observe(CategoryObserver::class);
         Tag::observe(TagObserver::class);
+        Proyect::observe(ProyectObserver::class);
+        Ticket::observe(TicketObserver::class);
 
     }
 }

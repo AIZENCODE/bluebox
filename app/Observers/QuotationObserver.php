@@ -45,7 +45,6 @@ class QuotationObserver
             $quotation->user_update_id = Auth::id(); // o editor_id, según tu estructura
         }
 
-
     }
     public function updated(Quotation $quotation): void
     {

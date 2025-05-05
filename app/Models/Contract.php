@@ -2,12 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class Contract extends Model
 {
+
+    use SoftDeletes;
     protected $fillable = [
         'code',
+        'name',
+        'document',
         'start_date',
         'end_date',
         'stage',
@@ -31,14 +36,26 @@ class Contract extends Model
         return $this->belongsTo(Quotation::class);
     }
 
-    public function services()
+
+    public function proyect()
     {
-        return $this->belongsToMany(Service::class);
+        return $this->belongsTo(Proyect::class);
     }
+
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class, 'contract_product')
+            ->withPivot('amount', 'price')
+            ->withTimestamps();
     }
+
+    public function services()
+    {
+        return $this->belongsToMany(Service::class, 'contract_service')
+            ->withPivot('amount', 'price')
+            ->withTimestamps();
+    }
+
     public function igv()
     {
         return $this->belongsTo(Igv::class);
@@ -52,6 +69,7 @@ class Contract extends Model
     {
         return $this->belongsTo(Currency::class);
     }
+
 
     public function user()
     {

@@ -62,6 +62,11 @@ class User extends Authenticatable implements FilamentUser
         return $this->belongsToMany(Activity::class);
     }
 
+    public function tickets()
+    {
+        return $this->belongsToMany(Ticket::class);
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         return true;
@@ -196,6 +201,17 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Category::class, 'user_update_id');
     }
     // Fin Categories
+
+    // Tickets
+    public function createdTickets()
+    {
+        return $this->hasMany(Ticket::class, 'user_id');
+    }
+    public function updatedTickets()
+    {
+        return $this->hasMany(Ticket::class, 'user_update_id');
+    }
+    // Fin Tickets
 
     // Fin Relaciones con usuarios en creacion y edicion
 

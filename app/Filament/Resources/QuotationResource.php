@@ -51,6 +51,11 @@ class QuotationResource extends Resource
                     ->description('Informacion de la cotización.')
                     ->schema([
 
+                        Forms\Components\TextInput::make('name')
+                            ->label('Titulo')
+                            ->required()
+                            ->live(),
+
                         Forms\Components\DatePicker::make('creation_date')
                             ->label('Fecha de Creación')
                             ->required()
@@ -212,6 +217,24 @@ class QuotationResource extends Resource
                     ])
                     ->columns(2),
 
+                Section::make('Envio de correo')
+                    ->description('Solicitud para enviar cotizacion por correo nuevamente.')
+                    ->visible(fn(Get $get) => $get('stage') === 'enviada' && !empty($get('mail_date')))
+                    ->schema([
+                        Forms\Components\Toggle::make('mail')
+                            ->label('Volver a enviar ')
+                            ->default(false)
+                            ->reactive()
+                   
+                            ->afterStateUpdated(function ($state, callable $set) {
+                                $set('email', (bool) $state);
+                            }),
+
+                        Forms\Components\TextInput::make('mail_date')
+                            ->label('Ultima fecha enviada')
+                            ->disabled(true),
+                    ]),
+
                 Section::make('Productos')
                     ->description('Productos de la cotización.')
                     ->schema([
@@ -313,7 +336,7 @@ class QuotationResource extends Resource
 
 
 
-                    Section::make('Servicios')
+                Section::make('Servicios')
                     ->description('Servicios de la cotización.')
                     ->schema([
                         Repeater::make('servicios')
@@ -475,7 +498,7 @@ class QuotationResource extends Resource
 
                                 $igv_id = $get('igv_id');
                                 $igv = \App\Models\Igv::find($igv_id);
-                                $igv_porcentaje = $igv ? $igv->porcentaje / 100 : 0;
+                                $igv_porcentaje = $igv ? $igv->percentage / 100 : 0;
 
                                 $total = $total_productos + $total_servicios;
                                 $igv_monto = $total * $igv_porcentaje;

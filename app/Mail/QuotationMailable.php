@@ -16,9 +16,11 @@ class QuotationMailable extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public $quotation; // <-- agrega esta línea
+
+    public function __construct($quotation)
     {
-        //
+        $this->quotation = $quotation;
     }
 
     /**
@@ -27,7 +29,7 @@ class QuotationMailable extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Cotización',
+            subject: 'Cotización '. $this->quotation->code, 
         );
     }
 
@@ -37,7 +39,10 @@ class QuotationMailable extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.quotation',
+            markdown: 'mails.quotation',
+            with: [
+                'quotation' => $this->quotation, // <-- corrige 'data' por 'quotation'
+            ],
         );
     }
 
