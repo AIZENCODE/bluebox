@@ -13,6 +13,7 @@ class WebhookController extends Controller
         putenv('HOME=/home/blueboxdev');
         putenv('PATH=/usr/local/bin:/usr/bin:/bin');
         shell_exec('dploy deploy master');
+        shell_exec('yes');
 
         return response()->json([
             'status' => 'success',
