@@ -40,7 +40,7 @@
 
                 <div class="grid gap-5">
                     <h1 class="text-5xl font-bold text-gray-900">
-                        Creamosssssssss soluciones digitales <br> que <span class="text-blue-600 ">sí funcionan</span>
+                        Creamosssss soluciones digitales <br> que <span class="text-blue-600 ">sí funcionan</span>
                     </h1>
                     <p class="text-gray-600 text-md">
                         Diseñamos sitios web, tiendas online y sistemas personalizados que fortalecen tu presencia
